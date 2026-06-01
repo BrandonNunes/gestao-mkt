@@ -1,0 +1,313 @@
+# Contratos de API — Cautelas, Checklists e Devoluções
+
+**Base URL**: `/api/cautelas`, `/api/checklists`
+**Autenticação**: Bearer token (JWT)
+**Perfil**: GESTOR (emissão, devolução), COLABORADOR (apenas consulta das próprias)
+
+---
+
+## Checklists
+
+### GET /api/checklists
+
+Lista todos os checklists.
+
+**Query Params**: `tipo=SAIDA|DEVOLUCAO`
+
+**Response 200**:
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "nome": "string",
+      "tipo": "SAIDA | DEVOLUCAO",
+      "_count": { "perguntas": "number" }
+    }
+  ]
+}
+```
+
+### POST /api/checklists
+
+Cria um novo checklist com perguntas.
+
+**Request Body**:
+```json
+{
+  "nome": "string (required)",
+  "tipo": "SAIDA | DEVOLUCAO (required)",
+  "perguntas": [
+    {
+      "pergunta": "string (required)",
+      "obrigatoria": "boolean (default true)",
+      "ordem": "number (required)"
+    }
+  ]
+}
+```
+
+**Response 201**: (objeto checklist criado com perguntas)
+
+### GET /api/checklists/:id
+
+Retorna um checklist com suas perguntas.
+
+**Response 200**:
+```json
+{
+  "id": "uuid",
+  "nome": "string",
+  "tipo": "SAIDA | DEVOLUCAO",
+  "perguntas": [
+    {
+      "id": "uuid",
+      "pergunta": "string",
+      "obrigatoria": "boolean",
+      "ordem": "number"
+    }
+  ]
+}
+```
+
+### PUT /api/checklists/:id
+
+Atualiza checklist e suas perguntas.
+
+**Request Body**: (mesmo formato de criação; perguntas enviadas substituem as existentes)
+**Response 200**: (objeto checklist atualizado)
+
+### DELETE /api/checklists/:id
+
+Exclui (soft delete) um checklist.
+
+**Response 200**: `{ "message": "Checklist excluído." }`
+
+---
+
+## Cautelas
+
+### GET /api/cautelas
+
+Lista todas as cautelas (paginado, com filtros).
+
+**Query Params**: `page=1`, `limit=20`, `status=ABERTA|EM_USO|ATRASADA|FINALIZADA|CANCELADA|PENDENTE`, `usuario_id=uuid`, `search=string`
+
+**Response 200**:
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "numero": "number",
+      "status": "ABERTA | EM_USO | ATRASADA | FINALIZADA | CANCELADA | PENDENTE",
+      "data_emissao": "datetime",
+      "data_prevista_retorno": "datetime",
+      "usuario": {
+        "id": "uuid",
+        "nome": "string",
+        "matricula": "string"
+      },
+      "_count": { "equipamentos": "number" }
+    }
+  ],
+  "total": "number",
+  "page": "number",
+  "limit": "number"
+}
+```
+
+### GET /api/cautelas/minhas
+
+Lista as cautelas do colaborador autenticado.
+
+**Response 200**: (mesmo formato de GET /, filtrado por usuario_id = autenticado)
+
+### GET /api/cautelas/:id
+
+Retorna detalhes completos de uma cautela.
+
+**Response 200**:
+```json
+{
+  "id": "uuid",
+  "numero": "number",
+  "status": "ABERTA | EM_USO | ATRASADA | FINALIZADA | CANCELADA | PENDENTE",
+  "data_emissao": "datetime",
+  "data_retirada": "datetime | null",
+  "data_prevista_retorno": "datetime",
+  "data_retorno": "datetime | null",
+  "observacoes": "string | null",
+  "usuario": {
+    "id": "uuid",
+    "nome": "string",
+    "matricula": "string",
+    "email": "string",
+    "telefone": "string | null"
+  },
+  "createdBy": {
+    "id": "uuid",
+    "nome": "string"
+  },
+  "equipamentos": [
+    {
+      "id": "uuid",
+      "codigo_patrimonial": "string",
+      "nome": "string",
+      "marca": "string | null",
+      "modelo": "string | null",
+      "acessorios": [
+        { "id": "uuid", "nome": "string" }
+      ]
+    }
+  ],
+  "checklist_saida": [
+    {
+      "id": "uuid",
+      "pergunta": "string",
+      "resposta": "boolean"
+    }
+  ],
+  "checklist_devolucao": [
+    {
+      "id": "uuid",
+      "pergunta": "string",
+      "resposta": "boolean"
+    }
+  ],
+  "createdAt": "datetime"
+}
+```
+**Response 404**: Cautela não encontrada
+
+### POST /api/cautelas
+
+Cria uma nova cautela (rascunho, status ABERTA).
+
+**Request Body**:
+```json
+{
+  "usuario_id": "uuid (required, colaborador responsável)",
+  "equipamento_ids": ["uuid", "uuid (required, min 1)"],
+  "data_prevista_retorno": "datetime (required, > now)"
+}
+```
+
+**Response 201**: (objeto cautela criada, status = ABERTA)
+**Response 422**: Algum equipamento não está disponível (com detalhes de quais)
+
+### POST /api/cautelas/:id/checklist-saida
+
+Preenche o checklist de saída da cautela.
+
+**Request Body**:
+```json
+{
+  "checklist_id": "uuid (required)",
+  "respostas": [
+    {
+      "pergunta_id": "uuid (required)",
+      "resposta": "boolean (required)"
+    }
+  ]
+}
+```
+
+**Response 200**: (objeto cautela atualizado com respostas)
+**Response 422**: Perguntas obrigatórias não respondidas
+
+### POST /api/cautelas/:id/emitir
+
+Emite a cautela (transição ABERTA → EM_USO).
+
+**Pré-condições**:
+- Cautela no status ABERTA
+- Checklist de saída completamente preenchido (todas obrigatórias respondidas)
+- Todos os equipamentos ainda disponíveis (revalida)
+
+**Response 200**:
+```json
+{
+  "id": "uuid",
+  "numero": "number",
+  "status": "EM_USO",
+  "data_retirada": "datetime (now)",
+  "equipamentos": [{ "id": "uuid", "status": "EMPRESTADO" }]
+}
+```
+**Response 422**: Pré-condições não atendidas
+
+### GET /api/cautelas/:id/pdf
+
+Gera o PDF da cautela.
+
+**Response 200**: `application/pdf` (download do arquivo)
+**Response 404**: Cautela não encontrada
+
+---
+
+## Devolução
+
+### POST /api/cautelas/:id/checklist-devolucao
+
+Preenche o checklist de devolução.
+
+**Request Body**: (mesmo formato do checklist de saída)
+**Response 200**: (objeto cautela atualizado)
+**Response 422**: Perguntas obrigatórias não respondidas
+
+### POST /api/cautelas/:id/devolver
+
+Registra a devolução da cautela.
+
+**Request Body**:
+```json
+{
+  "checklist_id": "uuid (required)",
+  "respostas": [
+    {
+      "pergunta_id": "uuid (required)",
+      "resposta": "boolean (required)"
+    }
+  ],
+  "tem_avarias": "boolean (required)",
+  "avarias_descricao": "string (required if tem_avarias = true)",
+  "observacoes": "string"
+}
+```
+
+**Pré-condições**:
+- Cautela no status EM_USO ou ATRASADA
+- Checklist de devolução completamente preenchido
+
+**Response 200**:
+```json
+{
+  "id": "uuid",
+  "status": "FINALIZADA | PENDENTE",
+  "data_retorno": "datetime (now)",
+  "equipamentos": [
+    { "id": "uuid", "status": "DISPONIVEL | AVARIADO" }
+  ]
+}
+```
+
+### POST /api/cautelas/:id/cancelar
+
+Cancela uma cautela (ABERTA ou EM_USO → CANCELADA).
+
+**Response 200**: `{ "id": "uuid", "status": "CANCELADA" }`
+**Response 422**: Cautela não pode ser cancelada (status não permite)
+
+---
+
+## Detecção de Atrasos
+
+**Scheduled Job** (cron a cada 1 minuto):
+
+Verifica todas as cautelas onde:
+- `status IN ('EM_USO')`
+- `data_prevista_retorno < NOW()`
+- `data_retorno IS NULL`
+
+E atualiza `status = 'ATRASADA'`.

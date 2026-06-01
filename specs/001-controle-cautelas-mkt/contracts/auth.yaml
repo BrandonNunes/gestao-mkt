@@ -1,0 +1,105 @@
+# Contratos de API — Autenticação
+
+**Base URL**: `/api/auth`
+
+## POST /login
+
+Autentica um usuário e retorna tokens de acesso.
+
+**Request Body**:
+```json
+{
+  "email": "string (required)",
+  "senha": "string (required)"
+}
+```
+
+**Response 200**:
+```json
+{
+  "accessToken": "string (JWT, 15min)",
+  "refreshToken": "string (JWT, 7d, httpOnly cookie)",
+  "usuario": {
+    "id": "uuid",
+    "nome": "string",
+    "email": "string",
+    "perfil": "GESTOR | COLABORADOR"
+  }
+}
+```
+
+**Response 401**: Credenciais inválidas
+**Response 403**: Usuário inativo
+
+---
+
+## POST /refresh
+
+Renova o access token usando o refresh token.
+
+**Cookie**: `refreshToken=string`
+
+**Response 200**:
+```json
+{
+  "accessToken": "string (novo JWT)"
+}
+```
+**Response 401**: Refresh token inválido ou expirado
+
+---
+
+## POST /logout
+
+Invalida o refresh token (logout).
+
+**Cookie**: `refreshToken=string`
+**Response 204**: No content
+
+---
+
+## POST /forgot-password
+
+Solicita recuperação de senha.
+
+**Request Body**:
+```json
+{
+  "email": "string (required)"
+}
+```
+**Response 200**: `{ "message": "Se o e-mail existir, um link de recuperação será enviado." }`
+
+---
+
+## POST /reset-password
+
+Redefine a senha com token de recuperação.
+
+**Request Body**:
+```json
+{
+  "token": "string (required)",
+  "novaSenha": "string (required, min 8)"
+}
+```
+**Response 200**: `{ "message": "Senha redefinida com sucesso." }`
+**Response 400**: Token inválido ou expirado
+
+---
+
+## POST /change-password
+
+Altera a senha do usuário autenticado.
+
+**Headers**: `Authorization: Bearer <accessToken>`
+
+**Request Body**:
+```json
+{
+  "senhaAtual": "string (required)",
+  "novaSenha": "string (required, min 8)"
+}
+```
+**Response 200**: `{ "message": "Senha alterada com sucesso." }`
+**Response 400**: Senha atual incorreta

@@ -1,0 +1,239 @@
+# Contratos de API — Equipamentos, Categorias e Acessórios
+
+**Base URL**: `/api/equipamentos`, `/api/categorias`, `/api/acessorios`
+**Autenticação**: Bearer token (JWT)
+**Perfil**: GESTOR (CRUD), COLABORADOR (apenas GET)
+
+---
+
+## Categorias
+
+### GET /api/categorias
+
+Lista todas as categorias.
+
+**Query Params**: `page=1`, `limit=50`, `search=string`
+
+**Response 200**:
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "nome": "string",
+      "_count": { "equipamentos": "number" }
+    }
+  ],
+  "total": "number"
+}
+```
+
+### POST /api/categorias
+
+Cria uma nova categoria.
+
+**Request Body**: `{ "nome": "string (required, unique)" }`
+**Response 201**: (objeto categoria)
+**Response 409**: Nome já existe
+
+### PUT /api/categorias/:id
+
+Atualiza uma categoria.
+
+**Request Body**: `{ "nome": "string (required)" }`
+**Response 200**: (objeto categoria atualizado)
+
+### DELETE /api/categorias/:id
+
+Exclui (soft delete) uma categoria.
+
+**Response 200**: `{ "message": "Categoria excluída." }`
+**Response 409**: Existem equipamentos vinculados a esta categoria
+
+---
+
+## Equipamentos
+
+### GET /api/equipamentos
+
+Lista todos os equipamentos (paginado, com filtros).
+
+**Query Params**: `page=1`, `limit=20`, `search=string`, `status=DISPONIVEL|EMPRESTADO|...`, `categoria_id=uuid`
+
+**Response 200**:
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "codigo_patrimonial": "string",
+      "nome": "string",
+      "categoria": { "id": "uuid", "nome": "string" },
+      "marca": "string | null",
+      "modelo": "string | null",
+      "numero_serie": "string | null",
+      "status": "DISPONIVEL | EMPRESTADO | MANUTENCAO | AVARIADO | INATIVO",
+      "localizacao": "string | null",
+      "_count": { "acessorios": "number", "cautelas": "number" }
+    }
+  ],
+  "total": "number",
+  "page": "number",
+  "limit": "number"
+}
+```
+
+### GET /api/equipamentos/disponiveis
+
+Lista apenas equipamentos disponíveis.
+
+**Response 200**: (mesmo formato de GET /, filtrado por status=DISPONIVEL)
+
+### GET /api/equipamentos/:id
+
+Retorna detalhes de um equipamento com acessórios.
+
+**Response 200**:
+```json
+{
+  "id": "uuid",
+  "codigo_patrimonial": "string",
+  "nome": "string",
+  "categoria": { "id": "uuid", "nome": "string" },
+  "marca": "string | null",
+  "modelo": "string | null",
+  "numero_serie": "string | null",
+  "descricao": "string | null",
+  "data_aquisicao": "datetime | null",
+  "valor_aquisicao": "number | null",
+  "localizacao": "string | null",
+  "status": "string",
+  "observacoes": "string | null",
+  "acessorios": [
+    {
+      "id": "uuid",
+      "nome": "string",
+      "codigo_interno": "string | null",
+      "descricao": "string | null",
+      "status": "ATIVO | INATIVO"
+    }
+  ],
+  "createdAt": "datetime",
+  "updatedAt": "datetime"
+}
+```
+**Response 404**: Equipamento não encontrado
+
+### POST /api/equipamentos
+
+Cadastra um novo equipamento.
+
+**Request Body**:
+```json
+{
+  "codigo_patrimonial": "string (required, unique)",
+  "nome": "string (required)",
+  "categoria_id": "uuid (required)",
+  "marca": "string",
+  "modelo": "string",
+  "numero_serie": "string",
+  "descricao": "string",
+  "data_aquisicao": "datetime",
+  "valor_aquisicao": "number",
+  "localizacao": "string",
+  "observacoes": "string"
+}
+```
+
+**Response 201**: (objeto equipamento criado, status inicial = DISPONIVEL)
+**Response 409**: Código patrimonial já existe
+
+### PUT /api/equipamentos/:id
+
+Atualiza um equipamento.
+
+**Request Body**: (todos os campos opcionais, exceto status se transição inválida)
+**Response 200**: (objeto equipamento atualizado)
+**Response 422**: Transição de status inválida
+
+### PUT /api/equipamentos/:id/status
+
+Altera o status do equipamento (respeitando máquina de estados).
+
+**Request Body**:
+```json
+{
+  "status": "DISPONIVEL | MANUTENCAO | AVARIADO | INATIVO",
+  "observacao": "string (motivo da alteração)"
+}
+```
+
+**Response 200**: (objeto equipamento atualizado)
+**Response 422**: Transição de status não permitida
+
+### DELETE /api/equipamentos/:id
+
+Exclui (soft delete) um equipamento.
+
+**Response 200**: `{ "message": "Equipamento excluído." }`
+**Response 409**: Equipamento está emprestado (em cautela ativa)
+
+---
+
+## Acessórios
+
+### GET /api/equipamentos/:equipamento_id/acessorios
+
+Lista acessórios de um equipamento.
+
+**Response 200**:
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "nome": "string",
+      "codigo_interno": "string | null",
+      "descricao": "string | null",
+      "status": "ATIVO | INATIVO"
+    }
+  ]
+}
+```
+
+### POST /api/equipamentos/:equipamento_id/acessorios
+
+Cadastra um acessório vinculado ao equipamento.
+
+**Request Body**:
+```json
+{
+  "nome": "string (required)",
+  "codigo_interno": "string",
+  "descricao": "string"
+}
+```
+
+**Response 201**: (objeto acessório criado, status inicial = ATIVO)
+
+### PUT /api/acessorios/:id
+
+Atualiza um acessório.
+
+**Request Body**:
+```json
+{
+  "nome": "string",
+  "codigo_interno": "string",
+  "descricao": "string",
+  "status": "ATIVO | INATIVO"
+}
+```
+
+**Response 200**: (objeto acessório atualizado)
+
+### DELETE /api/acessorios/:id
+
+Desativa (soft delete) um acessório.
+
+**Response 200**: `{ "message": "Acessório desativado." }`

@@ -1,0 +1,196 @@
+# Contratos de API — Dashboard, Relatórios e Auditoria
+
+**Base URL**: `/api/dashboard`, `/api/relatorios`, `/api/auditoria`
+**Autenticação**: Bearer token (JWT)
+**Perfil**: GESTOR (dashboard, relatórios, auditoria)
+
+---
+
+## Dashboard
+
+### GET /api/dashboard/indicadores
+
+Retorna os indicadores do dashboard.
+
+**Response 200**:
+```json
+{
+  "equipamentos": {
+    "total": "number",
+    "disponiveis": "number",
+    "emprestados": "number",
+    "em_manutencao": "number",
+    "avariados": "number"
+  },
+  "cautelas": {
+    "abertas": "number",
+    "em_uso": "number",
+    "atrasadas": "number"
+  }
+}
+```
+
+### GET /api/dashboard/graficos
+
+Retorna dados para os gráficos.
+
+**Query Params**: `meses=6` (quantidade de meses para o histórico)
+
+**Response 200**:
+```json
+{
+  "utilizacao_mensal": [
+    {
+      "mes": "string (YYYY-MM)",
+      "total_cautelas": "number",
+      "total_devolucoes": "number"
+    }
+  ],
+  "equipamentos_mais_utilizados": [
+    {
+      "equipamento_id": "uuid",
+      "equipamento_nome": "string",
+      "total_emprestimos": "number"
+    }
+  ]
+}
+```
+
+---
+
+## Relatórios
+
+### GET /api/relatorios/equipamentos
+
+Relatório de equipamentos por status.
+
+**Query Params**: `status=DISPONIVEL|EMPRESTADO|MANUTENCAO|AVARIADO|INATIVO`
+
+**Response 200**:
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "codigo_patrimonial": "string",
+      "nome": "string",
+      "categoria": "string",
+      "marca": "string | null",
+      "modelo": "string | null",
+      "status": "string",
+      "localizacao": "string | null",
+      "ultima_cautela": "datetime | null"
+    }
+  ],
+  "total": "number"
+}
+```
+
+### GET /api/relatorios/cautelas
+
+Relatório de cautelas por situação.
+
+**Query Params**: `status=ABERTA|EM_USO|ATRASADA|FINALIZADA|CANCELADA|PENDENTE`
+
+**Response 200**:
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "numero": "number",
+      "status": "string",
+      "data_emissao": "datetime",
+      "data_prevista_retorno": "datetime",
+      "data_retorno": "datetime | null",
+      "usuario_nome": "string",
+      "usuario_matricula": "string",
+      "qtd_equipamentos": "number"
+    }
+  ],
+  "total": "number"
+}
+```
+
+### GET /api/relatorios/utilizacao
+
+Relatório de utilização por período.
+
+**Query Params**: `data_inicio=datetime (required)`, `data_fim=datetime (required)`
+
+**Response 200**:
+```json
+{
+  "equipamentos_mais_utilizados": [
+    {
+      "equipamento_id": "uuid",
+      "equipamento_nome": "string",
+      "codigo_patrimonial": "string",
+      "total_emprestimos": "number"
+    }
+  ],
+  "usuarios_mais_emprestimos": [
+    {
+      "usuario_id": "uuid",
+      "usuario_nome": "string",
+      "usuario_matricula": "string",
+      "total_cautelas": "number"
+    }
+  ],
+  "total_cautelas_periodo": "number"
+}
+```
+
+---
+
+## Auditoria
+
+### GET /api/auditoria
+
+Lista registros de auditoria (paginado, com filtros).
+
+**Query Params**: `page=1`, `limit=50`, `entidade=string`, `acao=string`, `usuario_id=uuid`, `data_inicio=datetime`, `data_fim=datetime`
+
+**Response 200**:
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "entidade": "string",
+      "entidade_id": "uuid",
+      "acao": "string",
+      "usuario": {
+        "id": "uuid",
+        "nome": "string"
+      },
+      "data_hora": "datetime (UTC)",
+      "detalhes": "object | null"
+    }
+  ],
+  "total": "number",
+  "page": "number",
+  "limit": "number"
+}
+```
+
+### GET /api/auditoria/:entidade/:entidade_id
+
+Lista o histórico de uma entidade específica.
+
+**Response 200**:
+```json
+{
+  "entidade": "string",
+  "entidade_id": "uuid",
+  "registros": [
+    {
+      "id": "uuid",
+      "acao": "string",
+      "usuario_nome": "string",
+      "data_hora": "datetime",
+      "detalhes": "object | null"
+    }
+  ]
+}
+```

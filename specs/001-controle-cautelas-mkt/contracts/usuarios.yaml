@@ -1,0 +1,112 @@
+# Contratos de API — Usuários
+
+**Base URL**: `/api/usuarios`
+**Autenticação**: Bearer token (JWT)
+**Perfil requerido**: GESTOR (exceto `GET /me`)
+
+## GET /me
+
+Retorna o perfil do usuário autenticado.
+
+**Response 200**:
+```json
+{
+  "id": "uuid",
+  "nome": "string",
+  "email": "string",
+  "matricula": "string",
+  "telefone": "string | null",
+  "perfil": "GESTOR | COLABORADOR",
+  "status": "ATIVO | INATIVO"
+}
+```
+
+---
+
+## GET /
+
+Lista todos os usuários (paginado).
+
+**Query Params**: `page=1`, `limit=20`, `search=string`, `perfil=GESTOR|COLABORADOR`, `status=ATIVO|INATIVO`
+
+**Response 200**:
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "nome": "string",
+      "email": "string",
+      "matricula": "string",
+      "telefone": "string | null",
+      "perfil": "GESTOR | COLABORADOR",
+      "status": "ATIVO | INATIVO",
+      "createdAt": "datetime"
+    }
+  ],
+  "total": "number",
+  "page": "number",
+  "limit": "number"
+}
+```
+
+---
+
+## GET /:id
+
+Retorna detalhes de um usuário específico.
+
+**Response 200**: (objeto usuário completo)
+**Response 404**: Usuário não encontrado
+
+---
+
+## POST /
+
+Cria um novo usuário.
+
+**Request Body**:
+```json
+{
+  "nome": "string (required)",
+  "email": "string (required, unique)",
+  "matricula": "string (required, unique)",
+  "telefone": "string",
+  "perfil": "GESTOR | COLABORADOR (required)",
+  "senha": "string (required, min 8)"
+}
+```
+
+**Response 201**: (objeto usuário criado, sem senha)
+**Response 409**: Email ou matrícula já cadastrados
+
+---
+
+## PUT /:id
+
+Atualiza um usuário existente.
+
+**Request Body**:
+```json
+{
+  "nome": "string",
+  "email": "string",
+  "matricula": "string",
+  "telefone": "string",
+  "perfil": "GESTOR | COLABORADOR",
+  "status": "ATIVO | INATIVO"
+}
+```
+
+**Response 200**: (objeto usuário atualizado)
+**Response 404**: Usuário não encontrado
+**Response 409**: Email ou matrícula já em uso por outro usuário
+
+---
+
+## DELETE /:id
+
+Desativa (soft delete) um usuário.
+
+**Response 200**: `{ "message": "Usuário desativado com sucesso." }`
+**Response 404**: Usuário não encontrado

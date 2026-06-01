@@ -1,0 +1,208 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Perfil {
+  GESTOR
+  COLABORADOR
+}
+
+enum StatusUsuario {
+  ATIVO
+  INATIVO
+}
+
+enum StatusEquipamento {
+  DISPONIVEL
+  EMPRESTADO
+  MANUTENCAO
+  AVARIADO
+  INATIVO
+}
+
+enum StatusCautela {
+  ABERTA
+  EM_USO
+  ATRASADA
+  FINALIZADA
+  CANCELADA
+  PENDENTE
+}
+
+enum TipoChecklist {
+  SAIDA
+  DEVOLUCAO
+}
+
+model Usuario {
+  id                  String       @id @default(uuid())
+  nome                String
+  email               String       @unique
+  senha               String
+  matricula           String       @unique
+  telefone            String?
+  perfil              Perfil       @default(COLABORADOR)
+  status              StatusUsuario @default(ATIVO)
+  consentimento_lgpd  DateTime?
+  data_exclusao_lgpd  DateTime?
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+  deletedAt           DateTime?
+
+  cautelasComoResponsavel Cautela[]      @relation("CautelaResponsavel")
+  cautelasCriadas         Cautela[]      @relation("CautelaCriador")
+  historicos              Historico[]
+
+  @@index([email])
+  @@index([matricula])
+}
+
+model Categoria {
+  id        String    @id @default(uuid())
+  nome      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  equipamentos Equipamento[]
+}
+
+model Equipamento {
+  id                  String            @id @default(uuid())
+  codigo_patrimonial  String            @unique
+  nome                String
+  categoria_id        String
+  marca               String?
+  modelo              String?
+  numero_serie        String?
+  descricao           String?
+  data_aquisicao      DateTime?
+  valor_aquisicao     Decimal?
+  localizacao         String?
+  status              StatusEquipamento @default(DISPONIVEL)
+  observacoes         String?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  deletedAt           DateTime?
+
+  categoria             Categoria             @relation(fields: [categoria_id], references: [id])
+  acessorios            Acessorio[]
+  cautelaEquipamentos   CautelaEquipamento[]
+
+  @@index([codigo_patrimonial])
+  @@index([status])
+  @@index([categoria_id])
+}
+
+model Acessorio {
+  id              String   @id @default(uuid())
+  equipamento_id  String
+  nome            String
+  codigo_interno  String?
+  descricao       String?
+  status          String   @default("ATIVO")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  deletedAt       DateTime?
+
+  equipamento Equipamento @relation(fields: [equipamento_id], references: [id])
+
+  @@index([equipamento_id])
+}
+
+model Checklist {
+  id        String         @id @default(uuid())
+  nome      String
+  tipo      TipoChecklist
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  deletedAt DateTime?
+
+  perguntas ChecklistPergunta[]
+}
+
+model ChecklistPergunta {
+  id           String   @id @default(uuid())
+  checklist_id String
+  pergunta     String
+  obrigatoria  Boolean  @default(true)
+  ordem        Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  deletedAt    DateTime?
+
+  checklist          Checklist           @relation(fields: [checklist_id], references: [id])
+  respostasChecklist RespostaChecklist[]
+
+  @@index([checklist_id])
+}
+
+model Cautela {
+  id                    String        @id @default(uuid())
+  numero                Int           @unique
+  usuario_id            String
+  status                StatusCautela @default(ABERTA)
+  data_emissao          DateTime      @default(now())
+  data_retirada         DateTime?
+  data_prevista_retorno DateTime
+  data_retorno          DateTime?
+  observacoes           String?
+  createdBy_id          String
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  deletedAt             DateTime?
+
+  usuario   Usuario               @relation("CautelaResponsavel", fields: [usuario_id], references: [id])
+  createdBy Usuario               @relation("CautelaCriador", fields: [createdBy_id], references: [id])
+  equipamentos CautelaEquipamento[]
+  respostas   RespostaChecklist[]
+
+  @@index([status])
+  @@index([usuario_id])
+  @@index([data_prevista_retorno])
+}
+
+model CautelaEquipamento {
+  id             String @id @default(uuid())
+  cautela_id     String
+  equipamento_id String
+
+  cautela     Cautela     @relation(fields: [cautela_id], references: [id])
+  equipamento Equipamento @relation(fields: [equipamento_id], references: [id])
+
+  @@index([cautela_id])
+  @@index([equipamento_id])
+}
+
+model RespostaChecklist {
+  id          String  @id @default(uuid())
+  cautela_id  String
+  pergunta_id String
+  resposta    Boolean
+
+  cautela  Cautela            @relation(fields: [cautela_id], references: [id])
+  pergunta ChecklistPergunta  @relation(fields: [pergunta_id], references: [id])
+
+  @@index([cautela_id])
+}
+
+model Historico {
+  id          String   @id @default(uuid())
+  entidade    String
+  entidade_id String
+  acao        String
+  usuario_id  String
+  data_hora   DateTime @default(now())
+  detalhes    Json?
+
+  usuario Usuario @relation(fields: [usuario_id], references: [id])
+
+  @@index([entidade, entidade_id])
+  @@index([usuario_id])
+  @@index([data_hora])
+}

@@ -1,0 +1,17 @@
+import { NextRequest, NextResponse } from "next/server";
+import { getTokenFromRequest } from "@/src/lib/auth";
+import * as cautelasService from "@/src/features/cautelas/services/cautelas.service";
+
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const user = await getTokenFromRequest(request);
+  if (!user) return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
+  if (user.perfil !== "GESTOR") return NextResponse.json({ error: "Acesso negado" }, { status: 403 });
+
+  const { id } = await params;
+  try {
+    const cautela = await cautelasService.cancelar(id);
+    return NextResponse.json(cautela);
+  } catch (err) {
+    return NextResponse.json({ error: err instanceof Error ? err.message : "Erro" }, { status: 422 });
+  }
+}
