@@ -205,7 +205,7 @@ export default function ChecklistFormDialog({ open, onOpenChange, onSuccess, che
             {perguntas.map((p, idx) => (
               <div key={p.id} className="border rounded-md p-3 mb-2 space-y-2">
                 <div className="flex gap-2 items-start">
-                  <span className="text-xs text-gray-400 mt-2 w-6">{idx + 1}.</span>
+                  <span className="text-xs text-muted-foreground/60 mt-2 w-6">{idx + 1}.</span>
                   <div className="flex-1">
                     <Input
                       placeholder="Texto da pergunta"
@@ -223,7 +223,7 @@ export default function ChecklistFormDialog({ open, onOpenChange, onSuccess, che
                     Remover
                   </Button>
                 </div>
-                <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
                   <input
                     type="checkbox"
                     checked={p.obrigatoria}
@@ -236,7 +236,7 @@ export default function ChecklistFormDialog({ open, onOpenChange, onSuccess, che
             ))}
 
             {perguntas.length === 0 && !perguntaError && (
-              <p className="text-sm text-gray-400">Nenhuma pergunta adicionada.</p>
+              <p className="text-sm text-muted-foreground/60">Nenhuma pergunta adicionada.</p>
             )}
           </div>
         </div>

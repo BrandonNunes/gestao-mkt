@@ -68,23 +68,23 @@ export default function EquipamentosList() {
       <Card>
         <CardContent className="p-0">
           {loading ? (
-            <div className="p-4 text-center text-gray-500">Carregando...</div>
+            <div className="p-4 text-center text-muted-foreground">Carregando...</div>
           ) : equipamentos.length === 0 ? (
-            <div className="p-4 text-center text-gray-500">Nenhum equipamento encontrado.</div>
+            <div className="p-4 text-center text-muted-foreground">Nenhum equipamento encontrado.</div>
           ) : (
             <table className="w-full text-sm">
-              <thead className="bg-muted ">
+              <thead className="bg-gray-50 ">
                 <tr>
-                  <th className="text-left p-3 text-foreground">Patrimônio</th>
-                  <th className="text-left p-3 text-foreground">Nome</th>
-                  <th className="text-left p-3 text-foreground">Categoria</th>
-                  <th className="text-left p-3 text-foreground">Status</th>
-                  <th className="text-left p-3 text-foreground">Ações</th>
+                  <th className="text-left p-3">Patrimônio</th>
+                  <th className="text-left p-3">Nome</th>
+                  <th className="text-left p-3">Categoria</th>
+                  <th className="text-left p-3">Status</th>
+                  <th className="text-left p-3">Ações</th>
                 </tr>
               </thead>
               <tbody>
                 {equipamentos.map((e: any) => (
-                  <tr key={e.id} className="border-t border-border">
+                  <tr key={e.id} className="border-t">
                     <td className="p-3">{e.codigo_patrimonial}</td>
                     <td className="p-3">{e.nome}</td>
                     <td className="p-3">{e.categoria?.nome}</td>

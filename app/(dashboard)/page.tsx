@@ -13,7 +13,7 @@ export default function DashboardPage() {
       .then(setIndicadores);
   }, []);
 
-  if (!indicadores) return <div className="p-4 text-gray-500">Carregando...</div>;
+  if (!indicadores) return <div className="p-4 text-muted-foreground">Carregando...</div>;
 
   return (
     <div>
@@ -21,7 +21,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm text-gray-500">Total</CardTitle>
+            <CardTitle className="text-sm text-muted-foreground">Total</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-3xl font-bold">{indicadores.equipamentos.total}</p>
@@ -57,7 +57,7 @@ export default function DashboardPage() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm text-gray-500">Cautelas Abertas</CardTitle>
+            <CardTitle className="text-sm text-muted-foreground">Cautelas Abertas</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-3xl font-bold">{indicadores.cautelas.abertas}</p>

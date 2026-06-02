@@ -77,8 +77,8 @@ export default function CautelaDetailPage() {
 
   useEffect(() => { fetchCautela(); }, [id]);
 
-  if (loading) return <div className="p-4 text-gray-500">Carregando...</div>;
-  if (!cautela) return <div className="p-4 text-gray-500">Cautela nao encontrada.</div>;
+  if (loading) return <div className="p-4 text-muted-foreground">Carregando...</div>;
+  if (!cautela) return <div className="p-4 text-muted-foreground">Cautela nao encontrada.</div>;
 
   const effectiveStatus = getEffectiveStatus(cautela);
   const showEmitir = isGestor && effectiveStatus === "ABERTA";
@@ -104,32 +104,32 @@ export default function CautelaDetailPage() {
           </CardHeader>
           <CardContent className="space-y-2 text-sm">
             <div>
-              <span className="text-gray-500">Responsavel: </span>
+              <span className="text-muted-foreground">Responsavel: </span>
               {cautela.usuario?.nome} ({cautela.usuario?.matricula})
             </div>
             <div>
-              <span className="text-gray-500">Emitida por: </span>
+              <span className="text-muted-foreground">Emitida por: </span>
               {cautela.createdBy?.nome || "-"}
             </div>
             <div>
-              <span className="text-gray-500">Emissao: </span>
+              <span className="text-muted-foreground">Emissao: </span>
               {fmtDate(cautela.data_emissao)}
             </div>
             <div>
-              <span className="text-gray-500">Prev. Retorno: </span>
+              <span className="text-muted-foreground">Prev. Retorno: </span>
               {fmtDate(cautela.data_prevista_retorno)}
             </div>
             <div>
-              <span className="text-gray-500">Retirada: </span>
+              <span className="text-muted-foreground">Retirada: </span>
               {fmtDate(cautela.data_retirada)}
             </div>
             <div>
-              <span className="text-gray-500">Devolucao: </span>
+              <span className="text-muted-foreground">Devolucao: </span>
               {fmtDate(cautela.data_retorno)}
             </div>
             {cautela.observacoes && (
               <div>
-                <span className="text-gray-500">Observacoes: </span>
+                <span className="text-muted-foreground">Observacoes: </span>
                 {cautela.observacoes}
               </div>
             )}
@@ -148,7 +148,7 @@ export default function CautelaDetailPage() {
                     {ce.equipamento.nome} ({ce.equipamento.codigo_patrimonial})
                   </p>
                   {cautela.acessorios && cautela.acessorios.length > 0 && (
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-muted-foreground mt-1">
                       Acessorios:{" "}
                       {cautela.acessorios
                         .map((ca) => ca.acessorio.nome)
@@ -158,7 +158,7 @@ export default function CautelaDetailPage() {
                 </div>
               ))}
               {(!cautela.equipamentos || cautela.equipamentos.length === 0) && (
-                <p className="text-sm text-gray-400">Nenhum equipamento.</p>
+                <p className="text-sm text-muted-foreground/60">Nenhum equipamento.</p>
               )}
             </div>
           </CardContent>
@@ -183,7 +183,7 @@ export default function CautelaDetailPage() {
               <div className="space-y-2">
                 {cautela.respostas.map((r, i) => (
                   <div key={i} className="flex items-center gap-2 text-sm">
-                    <Badge className={r.resposta ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}>
+                    <Badge className={r.resposta ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300" : "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300"}>
                       {r.resposta ? "Sim" : "Nao"}
                     </Badge>
                     <span>{r.pergunta?.pergunta}</span>
@@ -191,7 +191,7 @@ export default function CautelaDetailPage() {
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-gray-400">Nenhum checklist vinculado.</p>
+              <p className="text-sm text-muted-foreground/60">Nenhum checklist vinculado.</p>
             )}
           </CardContent>
         </Card>

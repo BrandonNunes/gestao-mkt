@@ -28,7 +28,7 @@ export default function ForgotPasswordForm() {
       <CardContent>
         {sent ? (
           <div className="space-y-4">
-            <p className="text-sm text-gray-600">Se o e-mail existir, um link de recuperação será enviado.</p>
+            <p className="text-sm text-muted-foreground">Se o e-mail existir, um link de recuperação será enviado.</p>
             <Link href="/login"><Button variant="outline" className="w-full">Voltar ao login</Button></Link>
           </div>
         ) : (

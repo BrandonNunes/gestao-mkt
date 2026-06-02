@@ -409,7 +409,7 @@ export default function EquipamentoFormDialog({ open, onOpenChange, onSuccess, e
           {acessorios.map((a, idx) => (
             <div key={a.tempId} className="border rounded-md p-3 mb-2 space-y-2">
               <div className="flex gap-2 items-start">
-                <span className="text-xs text-gray-400 mt-2 w-6">{idx + 1}.</span>
+                <span className="text-xs text-muted-foreground/60 mt-2 w-6">{idx + 1}.</span>
                 <div className="flex-1 space-y-2">
                   <Input
                     placeholder="Nome do acessorio *"
@@ -428,7 +428,7 @@ export default function EquipamentoFormDialog({ open, onOpenChange, onSuccess, e
                       onChange={(e) => updateAcessorio(a.tempId, "descricao", e.target.value)}
                     />
                   </div>
-                  <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                  <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
                     <input
                       type="checkbox"
                       checked={a.ativo}
@@ -452,7 +452,7 @@ export default function EquipamentoFormDialog({ open, onOpenChange, onSuccess, e
           ))}
 
           {acessorios.length === 0 && !acessorioError && (
-            <p className="text-sm text-gray-400">Nenhum acessorio adicionado.</p>
+            <p className="text-sm text-muted-foreground/60">Nenhum acessorio adicionado.</p>
           )}
         </div>
 

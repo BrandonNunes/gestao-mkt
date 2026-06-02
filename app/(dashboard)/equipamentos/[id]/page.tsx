@@ -63,11 +63,11 @@ export default function EquipamentoDetailPage() {
   }, [id]);
 
   if (loading) {
-    return <div className="p-4 text-gray-500">Carregando...</div>;
+    return <div className="p-4 text-muted-foreground">Carregando...</div>;
   }
 
   if (!equip) {
-    return <div className="p-4 text-gray-500">Equipamento nao encontrado.</div>;
+    return <div className="p-4 text-muted-foreground">Equipamento nao encontrado.</div>;
   }
 
   const infoRows = [
@@ -102,7 +102,7 @@ export default function EquipamentoDetailPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {infoRows.map((row) => (
               <div key={row.label}>
-                <p className="text-xs text-gray-500">{row.label}</p>
+                <p className="text-xs text-muted-foreground">{row.label}</p>
                 <p className="text-sm">{row.value}</p>
               </div>
             ))}
@@ -111,13 +111,13 @@ export default function EquipamentoDetailPage() {
             <div className="mt-4 space-y-2">
               {equip.descricao && (
                 <div>
-                  <p className="text-xs text-gray-500">Descricao</p>
+                  <p className="text-xs text-muted-foreground">Descricao</p>
                   <p className="text-sm">{equip.descricao}</p>
                 </div>
               )}
               {equip.observacoes && (
                 <div>
-                  <p className="text-xs text-gray-500">Observacoes</p>
+                  <p className="text-xs text-muted-foreground">Observacoes</p>
                   <p className="text-sm">{equip.observacoes}</p>
                 </div>
               )}
@@ -148,7 +148,7 @@ export default function EquipamentoDetailPage() {
                     <td className="p-3">{a.codigo_interno || "-"}</td>
                     <td className="p-3">{a.descricao || "-"}</td>
                     <td className="p-3">
-                      <Badge className={a.status === "ATIVO" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}>
+                      <Badge className={a.status === "ATIVO" ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300" : "bg-muted text-foreground/80"}>
                         {a.status === "ATIVO" ? "Ativo" : "Inativo"}
                       </Badge>
                     </td>
@@ -157,7 +157,7 @@ export default function EquipamentoDetailPage() {
               </tbody>
             </table>
           ) : (
-            <p className="p-4 text-gray-500">Nenhum acessorio vinculado.</p>
+            <p className="p-4 text-muted-foreground">Nenhum acessorio vinculado.</p>
           )}
         </CardContent>
       </Card>

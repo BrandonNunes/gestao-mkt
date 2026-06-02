@@ -41,9 +41,9 @@ export default function CautelasList() {
       <Card>
         <CardContent className="p-0">
           {loading ? (
-            <div className="p-4 text-center text-gray-500">Carregando...</div>
+            <div className="p-4 text-center text-muted-foreground">Carregando...</div>
           ) : cautelas.length === 0 ? (
-            <div className="p-4 text-center text-gray-500">Nenhuma cautela encontrada.</div>
+            <div className="p-4 text-center text-muted-foreground">Nenhuma cautela encontrada.</div>
           ) : (
             <table className="w-full text-sm">
               <thead className="bg-muted">

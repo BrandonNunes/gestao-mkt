@@ -63,7 +63,7 @@ export default function UsuariosList() {
     setStatusOpen(true);
   };
 
-  if (!isGestor) return <p className="text-gray-500">Acesso restrito.</p>;
+  if (!isGestor) return <p className="text-muted-foreground">Acesso restrito.</p>;
 
   return (
     <div>
@@ -83,9 +83,9 @@ export default function UsuariosList() {
       <Card>
         <CardContent className="p-0">
           {loading ? (
-            <div className="p-4 text-center text-gray-500">Carregando...</div>
+            <div className="p-4 text-center text-muted-foreground">Carregando...</div>
           ) : usuarios.length === 0 ? (
-            <div className="p-4 text-center text-gray-500">Nenhum usuário encontrado.</div>
+            <div className="p-4 text-center text-muted-foreground">Nenhum usuário encontrado.</div>
           ) : (
             <table className="w-full text-sm">
               <thead className="bg-muted">
@@ -106,7 +106,7 @@ export default function UsuariosList() {
                     <td className="p-3">{u.matricula}</td>
                     <td className="p-3">{u.perfil === "GESTOR" ? "Gestor" : "Colaborador"}</td>
                     <td className="p-3">
-                      <span className={`px-2 py-1 rounded-full text-xs ${u.status === "ATIVO" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}`}>
+                      <span className={`px-2 py-1 rounded-full text-xs ${u.status === "ATIVO" ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300" : "bg-muted text-foreground/80"}`}>
                         {u.status === "ATIVO" ? "Ativo" : "Inativo"}
                       </span>
                     </td>
@@ -125,7 +125,7 @@ export default function UsuariosList() {
       </Card>
       <div className="flex justify-between mt-4">
         <Button variant="outline" onClick={() => setPage(Math.max(1, page - 1))} disabled={page === 1}>Anterior</Button>
-        <span className="text-sm text-gray-500">Página {page} de {Math.ceil(total / 20) || 1}</span>
+        <span className="text-sm text-muted-foreground">Página {page} de {Math.ceil(total / 20) || 1}</span>
         <Button variant="outline" onClick={() => setPage(page + 1)} disabled={page * 20 >= total}>Próxima</Button>
       </div>
 

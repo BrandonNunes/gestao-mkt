@@ -174,7 +174,7 @@ export default function NovaCautelaPage() {
           <div className="space-y-1 max-h-80 overflow-y-auto border rounded-md p-2 mt-1">
             {equipamentos.map((e: any) => (
               <div key={e.id}>
-                <label className="flex items-center gap-2 p-1 hover:bg-gray-50 rounded cursor-pointer">
+                <label className="flex items-center gap-2 p-1 hover:bg-muted/50 rounded cursor-pointer">
                   <input
                     type="checkbox"
                     checked={selectedEquipamentos.includes(e.id)}
@@ -189,7 +189,7 @@ export default function NovaCautelaPage() {
                     {(acessoriosMap[e.id] || []).map((a) => (
                       <label
                         key={a.id}
-                        className="flex items-center gap-2 text-sm text-gray-600 hover:bg-gray-50 rounded cursor-pointer"
+                        className="flex items-center gap-2 text-sm text-muted-foreground hover:bg-muted/50 rounded cursor-pointer"
                       >
                         <input
                           type="checkbox"
@@ -200,14 +200,14 @@ export default function NovaCautelaPage() {
                       </label>
                     ))}
                     {(acessoriosMap[e.id] || []).length === 0 && (
-                      <p className="text-xs text-gray-400 ml-6">Sem acessorios</p>
+                      <p className="text-xs text-muted-foreground/60 ml-6">Sem acessorios</p>
                     )}
                   </div>
                 )}
               </div>
             ))}
             {equipamentos.length === 0 && (
-              <p className="text-sm text-gray-400 p-2">Nenhum equipamento disponivel.</p>
+              <p className="text-sm text-muted-foreground/60 p-2">Nenhum equipamento disponivel.</p>
             )}
           </div>
         </div>

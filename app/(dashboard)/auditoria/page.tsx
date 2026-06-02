@@ -21,7 +21,7 @@ export default function AuditoriaPage() {
       <Card>
         <CardContent className="p-0">
           {loading ? (
-            <div className="p-4 text-center text-gray-500">Carregando...</div>
+            <div className="p-4 text-center text-muted-foreground">Carregando...</div>
           ) : (
             <table className="w-full text-sm">
               <thead className="bg-muted">

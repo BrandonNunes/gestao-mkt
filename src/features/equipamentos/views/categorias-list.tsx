@@ -87,7 +87,7 @@ export default function CategoriasList({ categorias, onRefresh }: Props) {
 
       <div className="border rounded-md">
         {categorias.length === 0 ? (
-          <p className="p-4 text-gray-500">Nenhuma categoria cadastrada.</p>
+          <p className="p-4 text-muted-foreground">Nenhuma categoria cadastrada.</p>
         ) : (
           <table className="w-full text-sm">
             <thead className="bg-muted">

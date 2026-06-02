@@ -41,7 +41,7 @@ export default function ChecklistsList({ checklists, onRefresh }: Props) {
 
       <div className="border rounded-md">
         {checklists.length === 0 ? (
-          <p className="p-4 text-gray-500">Nenhum checklist cadastrado.</p>
+          <p className="p-4 text-muted-foreground">Nenhum checklist cadastrado.</p>
         ) : (
           <table className="w-full text-sm">
             <thead className="bg-muted">
@@ -57,7 +57,7 @@ export default function ChecklistsList({ checklists, onRefresh }: Props) {
                 <tr key={c.id} className="border-t border-border">
                   <td className="p-3">{c.nome}</td>
                   <td className="p-3">
-                    <span className={`px-2 py-1 rounded-full text-xs ${c.tipo === "SAIDA" ? "bg-blue-100 text-blue-800" : "bg-purple-100 text-purple-800"}`}>
+                    <span className={`px-2 py-1 rounded-full text-xs ${c.tipo === "SAIDA" ? "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300" : "bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300"}`}>
                       {c.tipo === "SAIDA" ? "Saída" : "Devolução"}
                     </span>
                   </td>

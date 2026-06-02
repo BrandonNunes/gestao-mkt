@@ -35,7 +35,7 @@ export default function RelatoriosPage() {
   return (
     <div>
       <h2 className="text-2xl font-bold mb-4">Relatorios</h2>
-      <p className="text-gray-500 mb-4">Selecione o tipo de relatorio desejado.</p>
+      <p className="text-muted-foreground mb-4">Selecione o tipo de relatorio desejado.</p>
 
       <div className="grid grid-cols-3 gap-4 mb-6">
         <Button variant="outline" className="p-6 h-auto text-center" onClick={() => fetchRelatorio("equipamentos")}>
@@ -49,7 +49,7 @@ export default function RelatoriosPage() {
         </Button>
       </div>
 
-      {loading && <p className="text-gray-500">Carregando...</p>}
+      {loading && <p className="text-muted-foreground">Carregando...</p>}
 
       {error && <div className="p-3 text-sm text-red-600 bg-red-50 rounded-md">{error}</div>}
 
@@ -76,7 +76,7 @@ export default function RelatoriosPage() {
                   </tr>
                 ))}
                 {data.length === 0 && (
-                  <tr><td colSpan={4} className="p-4 text-center text-gray-400">Nenhum equipamento.</td></tr>
+                  <tr><td colSpan={4} className="p-4 text-center text-muted-foreground/60">Nenhum equipamento.</td></tr>
                 )}
               </tbody>
             </table>
@@ -111,7 +111,7 @@ export default function RelatoriosPage() {
                   </tr>
                 ))}
                 {data.length === 0 && (
-                  <tr><td colSpan={6} className="p-4 text-center text-gray-400">Nenhuma cautela.</td></tr>
+                  <tr><td colSpan={6} className="p-4 text-center text-muted-foreground/60">Nenhuma cautela.</td></tr>
                 )}
               </tbody>
             </table>
@@ -125,7 +125,7 @@ export default function RelatoriosPage() {
             <CardHeader><CardTitle>Utilizacao no Periodo</CardTitle></CardHeader>
             <CardContent>
               <p className="text-3xl font-bold">{data.total_cautelas_periodo}</p>
-              <p className="text-sm text-gray-500">total de cautelas</p>
+              <p className="text-sm text-muted-foreground">total de cautelas</p>
             </CardContent>
           </Card>
           <Card>
