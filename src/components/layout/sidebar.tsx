@@ -3,17 +3,16 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { usePermission } from "@/src/hooks/use-permission";
-import { useAuth } from "@/src/hooks/use-auth";
 
 const navigation = [
-  { href: "/dashboard", label: "Dashboard", icon: "📊", gestor: true, colaborador: true },
-  { href: "/dashboard/equipamentos", label: "Equipamentos", icon: "📦", gestor: true, colaborador: true },
-  { href: "/dashboard/categorias", label: "Categorias", icon: "🏷️", gestor: true, colaborador: false },
-  { href: "/dashboard/usuarios", label: "Usuários", icon: "👥", gestor: true, colaborador: false },
-  { href: "/dashboard/cautelas", label: "Cautelas", icon: "📋", gestor: true, colaborador: true },
-  { href: "/dashboard/checklists", label: "Checklists", icon: "✅", gestor: true, colaborador: false },
-  { href: "/dashboard/relatorios", label: "Relatórios", icon: "📈", gestor: true, colaborador: false },
-  { href: "/dashboard/auditoria", label: "Auditoria", icon: "🔍", gestor: true, colaborador: false },
+  { href: "/", label: "Dashboard", icon: "📊", gestor: true, colaborador: true },
+  { href: "/equipamentos", label: "Equipamentos", icon: "📦", gestor: true, colaborador: true },
+  { href: "/categorias", label: "Categorias", icon: "🏷️", gestor: true, colaborador: false },
+  { href: "/usuarios", label: "Usuarios", icon: "👥", gestor: true, colaborador: false },
+  { href: "/cautelas", label: "Cautelas", icon: "📋", gestor: true, colaborador: true },
+  { href: "/checklists", label: "Checklists", icon: "✅", gestor: true, colaborador: false },
+  { href: "/relatorios", label: "Relatorios", icon: "📈", gestor: true, colaborador: false },
+  { href: "/auditoria", label: "Auditoria", icon: "🔍", gestor: true, colaborador: false },
 ];
 
 export function Sidebar() {
@@ -25,9 +24,9 @@ export function Sidebar() {
   );
 
   return (
-    <aside className="w-64 min-h-screen border-r bg-gray-50/50 p-4 hidden md:block">
+    <aside className="w-64 min-h-screen border-r border-border bg-muted/30 p-4 hidden md:block">
       <div className="mb-8 px-2">
-        <h1 className="text-lg font-bold">Cautela MKT</h1>
+        <h1 className="text-lg font-bold text-foreground">Cautela MKT</h1>
       </div>
       <nav className="space-y-1">
         {visibleNav.map((item) => (
@@ -37,7 +36,7 @@ export function Sidebar() {
             className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${
               pathname === item.href
                 ? "bg-primary text-primary-foreground"
-                : "hover:bg-gray-200 text-gray-700"
+                : "hover:bg-accent text-foreground/70"
             }`}
           >
             <span>{item.icon}</span>
