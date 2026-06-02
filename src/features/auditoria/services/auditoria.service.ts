@@ -8,7 +8,7 @@ export async function log(
   detalhes?: Record<string, unknown>,
 ) {
   return prisma.historico.create({
-    data: { entidade, entidade_id, acao, usuario_id, detalhes: detalhes ?? undefined },
+    data: { entidade, entidade_id, acao, usuario_id, detalhes: (detalhes ?? undefined) as any },
   });
 }
 
