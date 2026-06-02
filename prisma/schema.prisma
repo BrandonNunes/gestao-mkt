@@ -111,6 +111,7 @@ model Acessorio {
   deletedAt       DateTime?
 
   equipamento Equipamento @relation(fields: [equipamento_id], references: [id])
+  cautelaAcessorios CautelaAcessorio[]
 
   @@index([equipamento_id])
 }
@@ -161,6 +162,7 @@ model Cautela {
   createdBy Usuario               @relation("CautelaCriador", fields: [createdBy_id], references: [id])
   equipamentos CautelaEquipamento[]
   respostas   RespostaChecklist[]
+  acessorios  CautelaAcessorio[]
 
   @@index([status])
   @@index([usuario_id])
@@ -177,6 +179,18 @@ model CautelaEquipamento {
 
   @@index([cautela_id])
   @@index([equipamento_id])
+}
+
+model CautelaAcessorio {
+  id           String @id @default(uuid())
+  cautela_id   String
+  acessorio_id String
+
+  cautela   Cautela   @relation(fields: [cautela_id], references: [id])
+  acessorio Acessorio @relation(fields: [acessorio_id], references: [id])
+
+  @@index([cautela_id])
+  @@index([acessorio_id])
 }
 
 model RespostaChecklist {
