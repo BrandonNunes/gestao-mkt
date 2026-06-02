@@ -8,6 +8,7 @@ import { Badge } from "@/src/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/src/components/ui/card";
 import { STATUS_CAUTELA_LABELS, STATUS_CAUTELA_COLORS } from "@/src/lib/constants";
 import CautelaEmitirDialog from "@/src/features/cautelas/views/cautela-emitir-dialog";
+import CautelaDevolverDialog from "@/src/features/cautelas/views/cautela-devolver-dialog";
 
 interface CautelaDetail {
   id: string;
@@ -44,6 +45,13 @@ function fmtDate(iso?: string) {
   return new Date(iso).toLocaleDateString("pt-BR", { timeZone: "UTC" });
 }
 
+function getEffectiveStatus(c: { status: string; data_prevista_retorno: string; data_retorno?: string | null }) {
+  if (c.status === "EM_USO" && !c.data_retorno && new Date(c.data_prevista_retorno) < new Date()) {
+    return "ATRASADA";
+  }
+  return c.status;
+}
+
 export default function CautelaDetailPage() {
   const params = useParams();
   const router = useRouter();
@@ -52,6 +60,7 @@ export default function CautelaDetailPage() {
   const [cautela, setCautela] = useState<CautelaDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [emitirOpen, setEmitirOpen] = useState(false);
+  const [devolverOpen, setDevolverOpen] = useState(false);
 
   const fetchCautela = () => {
     const token = localStorage.getItem("accessToken");
@@ -71,7 +80,9 @@ export default function CautelaDetailPage() {
   if (loading) return <div className="p-4 text-gray-500">Carregando...</div>;
   if (!cautela) return <div className="p-4 text-gray-500">Cautela nao encontrada.</div>;
 
-  const showEmitir = isGestor && cautela.status === "ABERTA";
+  const effectiveStatus = getEffectiveStatus(cautela);
+  const showEmitir = isGestor && effectiveStatus === "ABERTA";
+  const showDevolver = isGestor && (effectiveStatus === "EM_USO" || effectiveStatus === "ATRASADA");
 
   return (
     <div>
@@ -81,8 +92,8 @@ export default function CautelaDetailPage() {
 
       <div className="flex items-center gap-3 mb-6">
         <h2 className="text-2xl font-bold">Cautela #{cautela.numero || "-"}</h2>
-        <Badge className={STATUS_CAUTELA_COLORS[cautela.status as keyof typeof STATUS_CAUTELA_COLORS] || ""}>
-          {STATUS_CAUTELA_LABELS[cautela.status as keyof typeof STATUS_CAUTELA_LABELS]}
+        <Badge className={STATUS_CAUTELA_COLORS[effectiveStatus as keyof typeof STATUS_CAUTELA_COLORS] || ""}>
+          {STATUS_CAUTELA_LABELS[effectiveStatus as keyof typeof STATUS_CAUTELA_LABELS]}
         </Badge>
       </div>
 
@@ -161,6 +172,11 @@ export default function CautelaDetailPage() {
                 Emitir Cautela
               </Button>
             )}
+            {showDevolver && (
+              <Button size="sm" onClick={() => setDevolverOpen(true)}>
+                Devolver Cautela
+              </Button>
+            )}
           </CardHeader>
           <CardContent>
             {cautela.respostas && cautela.respostas.length > 0 ? (
@@ -185,6 +201,14 @@ export default function CautelaDetailPage() {
         <CautelaEmitirDialog
           open={emitirOpen}
           onOpenChange={setEmitirOpen}
+          cautelaId={cautela.id}
+          onSuccess={fetchCautela}
+        />
+      )}
+      {showDevolver && (
+        <CautelaDevolverDialog
+          open={devolverOpen}
+          onOpenChange={setDevolverOpen}
           cautelaId={cautela.id}
           onSuccess={fetchCautela}
         />
