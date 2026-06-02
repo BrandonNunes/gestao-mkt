@@ -1,4 +1,4 @@
-import prisma from "@/src/lib/prisma";
+import { prisma } from "@/src/lib/prisma";
 import { StatusEquipamento, TRANSICOES_EQUIPAMENTO } from "@/src/lib/constants";
 
 export async function list(params: {
@@ -23,7 +23,10 @@ export async function list(params: {
   const [data, total] = await Promise.all([
     prisma.equipamento.findMany({
       where,
-      include: { categoria: true, _count: { select: { acessorios: true, cautelaEquipamentos: true } } },
+      include: {
+        categoria: true,
+        _count: { select: { acessorios: true, cautelaEquipamentos: true } },
+      },
       skip: (page - 1) * limit,
       take: limit,
       orderBy: { nome: "asc" },
@@ -78,11 +81,7 @@ export async function update(id: string, data: Record<string, unknown>) {
   return prisma.equipamento.update({ where: { id }, data, include: { categoria: true } });
 }
 
-export async function updateStatus(
-  id: string,
-  novoStatus: StatusEquipamento,
-  observacao?: string,
-) {
+export async function updateStatus(id: string, novoStatus: StatusEquipamento, observacao?: string) {
   const equip = await prisma.equipamento.findUnique({ where: { id } });
   if (!equip) throw new Error("Equipamento não encontrado");
 

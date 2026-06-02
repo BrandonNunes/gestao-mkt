@@ -1,4 +1,4 @@
-import prisma from "@/src/lib/prisma";
+import { prisma } from "@/src/lib/prisma";
 import { StatusEquipamento } from "@/src/lib/constants";
 
 export async function relatorioEquipamentos(status?: string) {
@@ -57,5 +57,9 @@ export async function relatorioUtilizacao(data_inicio: string, data_fim: string)
     }),
   ]);
 
-  return { total_cautelas_periodo: cautelas, equipamentos_mais_utilizados: equipamentosUsados, usuarios_mais_emprestimos: usuarios };
+  return {
+    total_cautelas_periodo: cautelas,
+    equipamentos_mais_utilizados: equipamentosUsados,
+    usuarios_mais_emprestimos: usuarios,
+  };
 }

@@ -38,7 +38,7 @@ export async function login(email: string, senha: string): Promise<AuthTokens> {
   const accessToken = await signAccessToken(payload);
   const refreshToken = await signRefreshToken(payload);
 
-  return { accessToken, usuario: toPublic(user) };
+  return { accessToken, refreshToken, usuario: toPublic(user) };
 }
 
 export async function refreshSession(refreshTokenStr: string): Promise<AuthTokens> {
@@ -57,7 +57,7 @@ export async function refreshSession(refreshTokenStr: string): Promise<AuthToken
   const accessToken = await signAccessToken(newPayload);
   const refreshTokenNew = await signRefreshToken(newPayload);
 
-  return { accessToken, usuario: toPublic(user) };
+  return { accessToken, refreshToken: refreshTokenNew, usuario: toPublic(user) };
 }
 
 export async function forgotPassword(email: string): Promise<void> {

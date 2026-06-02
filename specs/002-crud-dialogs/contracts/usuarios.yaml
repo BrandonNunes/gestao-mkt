@@ -1,0 +1,75 @@
+# Contrato de API: Usuários (CRUD via Diálogo)
+# Feature: 002-crud-dialogs
+# Endpoints consumidos pelos Dialogs de cadastro, edição e status de usuário
+
+# POST /api/usuarios
+create_usuario:
+  method: POST
+  auth: Bearer <accessToken>
+  role: GESTOR
+  request:
+    body:
+      nome: string (required, min: 3)
+      email: string (required, email format, unique)
+      matricula: string (required, non-empty, unique)
+      telefone: string (optional)
+      perfil: "GESTOR" | "COLABORADOR" (required)
+      senha: string (required, min: 8)
+  responses:
+    201:
+      body:
+        id: string (UUID)
+        nome: string
+        email: string
+        matricula: string
+        perfil: string
+        status: "ATIVO"
+        # ... demais campos do UsuarioAdmin
+    400:
+      body:
+        error: string (mensagem de validação Zod)
+    409:
+      body:
+        error: string ("Email ou matrícula já cadastrados")
+
+# PUT /api/usuarios/:id
+update_usuario:
+  method: PUT
+  auth: Bearer <accessToken>
+  role: GESTOR
+  request:
+    body:
+      nome: string (optional, min: 3)
+      email: string (optional, email format, unique)
+      matricula: string (optional, non-empty, unique)
+      telefone: string (optional)
+      perfil: "GESTOR" | "COLABORADOR" (optional)
+      status: "ATIVO" | "INATIVO" (optional)
+  responses:
+    200:
+      body:
+        id: string (UUID)
+        nome: string
+        email: string
+        # ... campos atualizados do UsuarioAdmin
+    400:
+      body:
+        error: string (mensagem de validação)
+
+# GET /api/usuarios (listagem)
+list_usuarios:
+  method: GET
+  auth: Bearer <accessToken>
+  role: GESTOR
+  request:
+    query:
+      page: number (default: 1)
+      limit: number (default: 20)
+      search: string (optional, busca em nome/email/matricula)
+  responses:
+    200:
+      body:
+        data: array(UsuarioAdmin)
+        total: number
+        page: number
+        limit: number

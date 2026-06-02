@@ -284,6 +284,7 @@ export type CautelaWhereInput = {
   createdBy?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   equipamentos?: Prisma.CautelaEquipamentoListRelationFilter
   respostas?: Prisma.RespostaChecklistListRelationFilter
+  acessorios?: Prisma.CautelaAcessorioListRelationFilter
 }
 
 export type CautelaOrderByWithRelationInput = {
@@ -304,6 +305,7 @@ export type CautelaOrderByWithRelationInput = {
   createdBy?: Prisma.UsuarioOrderByWithRelationInput
   equipamentos?: Prisma.CautelaEquipamentoOrderByRelationAggregateInput
   respostas?: Prisma.RespostaChecklistOrderByRelationAggregateInput
+  acessorios?: Prisma.CautelaAcessorioOrderByRelationAggregateInput
 }
 
 export type CautelaWhereUniqueInput = Prisma.AtLeast<{
@@ -327,6 +329,7 @@ export type CautelaWhereUniqueInput = Prisma.AtLeast<{
   createdBy?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   equipamentos?: Prisma.CautelaEquipamentoListRelationFilter
   respostas?: Prisma.RespostaChecklistListRelationFilter
+  acessorios?: Prisma.CautelaAcessorioListRelationFilter
 }, "id" | "numero">
 
 export type CautelaOrderByWithAggregationInput = {
@@ -371,7 +374,7 @@ export type CautelaScalarWhereWithAggregatesInput = {
 
 export type CautelaCreateInput = {
   id?: string
-  numero: number
+  numero?: number
   status?: $Enums.StatusCautela
   data_emissao?: Date | string
   data_retirada?: Date | string | null
@@ -385,11 +388,12 @@ export type CautelaCreateInput = {
   createdBy: Prisma.UsuarioCreateNestedOneWithoutCautelasCriadasInput
   equipamentos?: Prisma.CautelaEquipamentoCreateNestedManyWithoutCautelaInput
   respostas?: Prisma.RespostaChecklistCreateNestedManyWithoutCautelaInput
+  acessorios?: Prisma.CautelaAcessorioCreateNestedManyWithoutCautelaInput
 }
 
 export type CautelaUncheckedCreateInput = {
   id?: string
-  numero: number
+  numero?: number
   usuario_id: string
   status?: $Enums.StatusCautela
   data_emissao?: Date | string
@@ -403,11 +407,11 @@ export type CautelaUncheckedCreateInput = {
   deletedAt?: Date | string | null
   equipamentos?: Prisma.CautelaEquipamentoUncheckedCreateNestedManyWithoutCautelaInput
   respostas?: Prisma.RespostaChecklistUncheckedCreateNestedManyWithoutCautelaInput
+  acessorios?: Prisma.CautelaAcessorioUncheckedCreateNestedManyWithoutCautelaInput
 }
 
 export type CautelaUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  numero?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusCautelaFieldUpdateOperationsInput | $Enums.StatusCautela
   data_emissao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   data_retirada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -421,6 +425,7 @@ export type CautelaUpdateInput = {
   createdBy?: Prisma.UsuarioUpdateOneRequiredWithoutCautelasCriadasNestedInput
   equipamentos?: Prisma.CautelaEquipamentoUpdateManyWithoutCautelaNestedInput
   respostas?: Prisma.RespostaChecklistUpdateManyWithoutCautelaNestedInput
+  acessorios?: Prisma.CautelaAcessorioUpdateManyWithoutCautelaNestedInput
 }
 
 export type CautelaUncheckedUpdateInput = {
@@ -439,11 +444,12 @@ export type CautelaUncheckedUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   equipamentos?: Prisma.CautelaEquipamentoUncheckedUpdateManyWithoutCautelaNestedInput
   respostas?: Prisma.RespostaChecklistUncheckedUpdateManyWithoutCautelaNestedInput
+  acessorios?: Prisma.CautelaAcessorioUncheckedUpdateManyWithoutCautelaNestedInput
 }
 
 export type CautelaCreateManyInput = {
   id?: string
-  numero: number
+  numero?: number
   usuario_id: string
   status?: $Enums.StatusCautela
   data_emissao?: Date | string
@@ -459,7 +465,6 @@ export type CautelaCreateManyInput = {
 
 export type CautelaUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  numero?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusCautelaFieldUpdateOperationsInput | $Enums.StatusCautela
   data_emissao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   data_retirada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -660,6 +665,20 @@ export type CautelaUpdateOneRequiredWithoutEquipamentosNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CautelaUpdateToOneWithWhereWithoutEquipamentosInput, Prisma.CautelaUpdateWithoutEquipamentosInput>, Prisma.CautelaUncheckedUpdateWithoutEquipamentosInput>
 }
 
+export type CautelaCreateNestedOneWithoutAcessoriosInput = {
+  create?: Prisma.XOR<Prisma.CautelaCreateWithoutAcessoriosInput, Prisma.CautelaUncheckedCreateWithoutAcessoriosInput>
+  connectOrCreate?: Prisma.CautelaCreateOrConnectWithoutAcessoriosInput
+  connect?: Prisma.CautelaWhereUniqueInput
+}
+
+export type CautelaUpdateOneRequiredWithoutAcessoriosNestedInput = {
+  create?: Prisma.XOR<Prisma.CautelaCreateWithoutAcessoriosInput, Prisma.CautelaUncheckedCreateWithoutAcessoriosInput>
+  connectOrCreate?: Prisma.CautelaCreateOrConnectWithoutAcessoriosInput
+  upsert?: Prisma.CautelaUpsertWithoutAcessoriosInput
+  connect?: Prisma.CautelaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CautelaUpdateToOneWithWhereWithoutAcessoriosInput, Prisma.CautelaUpdateWithoutAcessoriosInput>, Prisma.CautelaUncheckedUpdateWithoutAcessoriosInput>
+}
+
 export type CautelaCreateNestedOneWithoutRespostasInput = {
   create?: Prisma.XOR<Prisma.CautelaCreateWithoutRespostasInput, Prisma.CautelaUncheckedCreateWithoutRespostasInput>
   connectOrCreate?: Prisma.CautelaCreateOrConnectWithoutRespostasInput
@@ -676,7 +695,7 @@ export type CautelaUpdateOneRequiredWithoutRespostasNestedInput = {
 
 export type CautelaCreateWithoutUsuarioInput = {
   id?: string
-  numero: number
+  numero?: number
   status?: $Enums.StatusCautela
   data_emissao?: Date | string
   data_retirada?: Date | string | null
@@ -689,11 +708,12 @@ export type CautelaCreateWithoutUsuarioInput = {
   createdBy: Prisma.UsuarioCreateNestedOneWithoutCautelasCriadasInput
   equipamentos?: Prisma.CautelaEquipamentoCreateNestedManyWithoutCautelaInput
   respostas?: Prisma.RespostaChecklistCreateNestedManyWithoutCautelaInput
+  acessorios?: Prisma.CautelaAcessorioCreateNestedManyWithoutCautelaInput
 }
 
 export type CautelaUncheckedCreateWithoutUsuarioInput = {
   id?: string
-  numero: number
+  numero?: number
   status?: $Enums.StatusCautela
   data_emissao?: Date | string
   data_retirada?: Date | string | null
@@ -706,6 +726,7 @@ export type CautelaUncheckedCreateWithoutUsuarioInput = {
   deletedAt?: Date | string | null
   equipamentos?: Prisma.CautelaEquipamentoUncheckedCreateNestedManyWithoutCautelaInput
   respostas?: Prisma.RespostaChecklistUncheckedCreateNestedManyWithoutCautelaInput
+  acessorios?: Prisma.CautelaAcessorioUncheckedCreateNestedManyWithoutCautelaInput
 }
 
 export type CautelaCreateOrConnectWithoutUsuarioInput = {
@@ -720,7 +741,7 @@ export type CautelaCreateManyUsuarioInputEnvelope = {
 
 export type CautelaCreateWithoutCreatedByInput = {
   id?: string
-  numero: number
+  numero?: number
   status?: $Enums.StatusCautela
   data_emissao?: Date | string
   data_retirada?: Date | string | null
@@ -733,11 +754,12 @@ export type CautelaCreateWithoutCreatedByInput = {
   usuario: Prisma.UsuarioCreateNestedOneWithoutCautelasComoResponsavelInput
   equipamentos?: Prisma.CautelaEquipamentoCreateNestedManyWithoutCautelaInput
   respostas?: Prisma.RespostaChecklistCreateNestedManyWithoutCautelaInput
+  acessorios?: Prisma.CautelaAcessorioCreateNestedManyWithoutCautelaInput
 }
 
 export type CautelaUncheckedCreateWithoutCreatedByInput = {
   id?: string
-  numero: number
+  numero?: number
   usuario_id: string
   status?: $Enums.StatusCautela
   data_emissao?: Date | string
@@ -750,6 +772,7 @@ export type CautelaUncheckedCreateWithoutCreatedByInput = {
   deletedAt?: Date | string | null
   equipamentos?: Prisma.CautelaEquipamentoUncheckedCreateNestedManyWithoutCautelaInput
   respostas?: Prisma.RespostaChecklistUncheckedCreateNestedManyWithoutCautelaInput
+  acessorios?: Prisma.CautelaAcessorioUncheckedCreateNestedManyWithoutCautelaInput
 }
 
 export type CautelaCreateOrConnectWithoutCreatedByInput = {
@@ -815,7 +838,7 @@ export type CautelaUpdateManyWithWhereWithoutCreatedByInput = {
 
 export type CautelaCreateWithoutEquipamentosInput = {
   id?: string
-  numero: number
+  numero?: number
   status?: $Enums.StatusCautela
   data_emissao?: Date | string
   data_retirada?: Date | string | null
@@ -828,11 +851,12 @@ export type CautelaCreateWithoutEquipamentosInput = {
   usuario: Prisma.UsuarioCreateNestedOneWithoutCautelasComoResponsavelInput
   createdBy: Prisma.UsuarioCreateNestedOneWithoutCautelasCriadasInput
   respostas?: Prisma.RespostaChecklistCreateNestedManyWithoutCautelaInput
+  acessorios?: Prisma.CautelaAcessorioCreateNestedManyWithoutCautelaInput
 }
 
 export type CautelaUncheckedCreateWithoutEquipamentosInput = {
   id?: string
-  numero: number
+  numero?: number
   usuario_id: string
   status?: $Enums.StatusCautela
   data_emissao?: Date | string
@@ -845,6 +869,7 @@ export type CautelaUncheckedCreateWithoutEquipamentosInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   respostas?: Prisma.RespostaChecklistUncheckedCreateNestedManyWithoutCautelaInput
+  acessorios?: Prisma.CautelaAcessorioUncheckedCreateNestedManyWithoutCautelaInput
 }
 
 export type CautelaCreateOrConnectWithoutEquipamentosInput = {
@@ -865,7 +890,6 @@ export type CautelaUpdateToOneWithWhereWithoutEquipamentosInput = {
 
 export type CautelaUpdateWithoutEquipamentosInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  numero?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusCautelaFieldUpdateOperationsInput | $Enums.StatusCautela
   data_emissao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   data_retirada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -878,6 +902,7 @@ export type CautelaUpdateWithoutEquipamentosInput = {
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutCautelasComoResponsavelNestedInput
   createdBy?: Prisma.UsuarioUpdateOneRequiredWithoutCautelasCriadasNestedInput
   respostas?: Prisma.RespostaChecklistUpdateManyWithoutCautelaNestedInput
+  acessorios?: Prisma.CautelaAcessorioUpdateManyWithoutCautelaNestedInput
 }
 
 export type CautelaUncheckedUpdateWithoutEquipamentosInput = {
@@ -895,11 +920,12 @@ export type CautelaUncheckedUpdateWithoutEquipamentosInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   respostas?: Prisma.RespostaChecklistUncheckedUpdateManyWithoutCautelaNestedInput
+  acessorios?: Prisma.CautelaAcessorioUncheckedUpdateManyWithoutCautelaNestedInput
 }
 
-export type CautelaCreateWithoutRespostasInput = {
+export type CautelaCreateWithoutAcessoriosInput = {
   id?: string
-  numero: number
+  numero?: number
   status?: $Enums.StatusCautela
   data_emissao?: Date | string
   data_retirada?: Date | string | null
@@ -912,11 +938,12 @@ export type CautelaCreateWithoutRespostasInput = {
   usuario: Prisma.UsuarioCreateNestedOneWithoutCautelasComoResponsavelInput
   createdBy: Prisma.UsuarioCreateNestedOneWithoutCautelasCriadasInput
   equipamentos?: Prisma.CautelaEquipamentoCreateNestedManyWithoutCautelaInput
+  respostas?: Prisma.RespostaChecklistCreateNestedManyWithoutCautelaInput
 }
 
-export type CautelaUncheckedCreateWithoutRespostasInput = {
+export type CautelaUncheckedCreateWithoutAcessoriosInput = {
   id?: string
-  numero: number
+  numero?: number
   usuario_id: string
   status?: $Enums.StatusCautela
   data_emissao?: Date | string
@@ -929,6 +956,94 @@ export type CautelaUncheckedCreateWithoutRespostasInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   equipamentos?: Prisma.CautelaEquipamentoUncheckedCreateNestedManyWithoutCautelaInput
+  respostas?: Prisma.RespostaChecklistUncheckedCreateNestedManyWithoutCautelaInput
+}
+
+export type CautelaCreateOrConnectWithoutAcessoriosInput = {
+  where: Prisma.CautelaWhereUniqueInput
+  create: Prisma.XOR<Prisma.CautelaCreateWithoutAcessoriosInput, Prisma.CautelaUncheckedCreateWithoutAcessoriosInput>
+}
+
+export type CautelaUpsertWithoutAcessoriosInput = {
+  update: Prisma.XOR<Prisma.CautelaUpdateWithoutAcessoriosInput, Prisma.CautelaUncheckedUpdateWithoutAcessoriosInput>
+  create: Prisma.XOR<Prisma.CautelaCreateWithoutAcessoriosInput, Prisma.CautelaUncheckedCreateWithoutAcessoriosInput>
+  where?: Prisma.CautelaWhereInput
+}
+
+export type CautelaUpdateToOneWithWhereWithoutAcessoriosInput = {
+  where?: Prisma.CautelaWhereInput
+  data: Prisma.XOR<Prisma.CautelaUpdateWithoutAcessoriosInput, Prisma.CautelaUncheckedUpdateWithoutAcessoriosInput>
+}
+
+export type CautelaUpdateWithoutAcessoriosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumStatusCautelaFieldUpdateOperationsInput | $Enums.StatusCautela
+  data_emissao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  data_retirada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  data_prevista_retorno?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  data_retorno?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  usuario?: Prisma.UsuarioUpdateOneRequiredWithoutCautelasComoResponsavelNestedInput
+  createdBy?: Prisma.UsuarioUpdateOneRequiredWithoutCautelasCriadasNestedInput
+  equipamentos?: Prisma.CautelaEquipamentoUpdateManyWithoutCautelaNestedInput
+  respostas?: Prisma.RespostaChecklistUpdateManyWithoutCautelaNestedInput
+}
+
+export type CautelaUncheckedUpdateWithoutAcessoriosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  numero?: Prisma.IntFieldUpdateOperationsInput | number
+  usuario_id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumStatusCautelaFieldUpdateOperationsInput | $Enums.StatusCautela
+  data_emissao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  data_retirada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  data_prevista_retorno?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  data_retorno?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy_id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  equipamentos?: Prisma.CautelaEquipamentoUncheckedUpdateManyWithoutCautelaNestedInput
+  respostas?: Prisma.RespostaChecklistUncheckedUpdateManyWithoutCautelaNestedInput
+}
+
+export type CautelaCreateWithoutRespostasInput = {
+  id?: string
+  numero?: number
+  status?: $Enums.StatusCautela
+  data_emissao?: Date | string
+  data_retirada?: Date | string | null
+  data_prevista_retorno: Date | string
+  data_retorno?: Date | string | null
+  observacoes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  usuario: Prisma.UsuarioCreateNestedOneWithoutCautelasComoResponsavelInput
+  createdBy: Prisma.UsuarioCreateNestedOneWithoutCautelasCriadasInput
+  equipamentos?: Prisma.CautelaEquipamentoCreateNestedManyWithoutCautelaInput
+  acessorios?: Prisma.CautelaAcessorioCreateNestedManyWithoutCautelaInput
+}
+
+export type CautelaUncheckedCreateWithoutRespostasInput = {
+  id?: string
+  numero?: number
+  usuario_id: string
+  status?: $Enums.StatusCautela
+  data_emissao?: Date | string
+  data_retirada?: Date | string | null
+  data_prevista_retorno: Date | string
+  data_retorno?: Date | string | null
+  observacoes?: string | null
+  createdBy_id: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  equipamentos?: Prisma.CautelaEquipamentoUncheckedCreateNestedManyWithoutCautelaInput
+  acessorios?: Prisma.CautelaAcessorioUncheckedCreateNestedManyWithoutCautelaInput
 }
 
 export type CautelaCreateOrConnectWithoutRespostasInput = {
@@ -949,7 +1064,6 @@ export type CautelaUpdateToOneWithWhereWithoutRespostasInput = {
 
 export type CautelaUpdateWithoutRespostasInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  numero?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusCautelaFieldUpdateOperationsInput | $Enums.StatusCautela
   data_emissao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   data_retirada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -962,6 +1076,7 @@ export type CautelaUpdateWithoutRespostasInput = {
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutCautelasComoResponsavelNestedInput
   createdBy?: Prisma.UsuarioUpdateOneRequiredWithoutCautelasCriadasNestedInput
   equipamentos?: Prisma.CautelaEquipamentoUpdateManyWithoutCautelaNestedInput
+  acessorios?: Prisma.CautelaAcessorioUpdateManyWithoutCautelaNestedInput
 }
 
 export type CautelaUncheckedUpdateWithoutRespostasInput = {
@@ -979,11 +1094,12 @@ export type CautelaUncheckedUpdateWithoutRespostasInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   equipamentos?: Prisma.CautelaEquipamentoUncheckedUpdateManyWithoutCautelaNestedInput
+  acessorios?: Prisma.CautelaAcessorioUncheckedUpdateManyWithoutCautelaNestedInput
 }
 
 export type CautelaCreateManyUsuarioInput = {
   id?: string
-  numero: number
+  numero?: number
   status?: $Enums.StatusCautela
   data_emissao?: Date | string
   data_retirada?: Date | string | null
@@ -998,7 +1114,7 @@ export type CautelaCreateManyUsuarioInput = {
 
 export type CautelaCreateManyCreatedByInput = {
   id?: string
-  numero: number
+  numero?: number
   usuario_id: string
   status?: $Enums.StatusCautela
   data_emissao?: Date | string
@@ -1013,7 +1129,6 @@ export type CautelaCreateManyCreatedByInput = {
 
 export type CautelaUpdateWithoutUsuarioInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  numero?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusCautelaFieldUpdateOperationsInput | $Enums.StatusCautela
   data_emissao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   data_retirada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1026,6 +1141,7 @@ export type CautelaUpdateWithoutUsuarioInput = {
   createdBy?: Prisma.UsuarioUpdateOneRequiredWithoutCautelasCriadasNestedInput
   equipamentos?: Prisma.CautelaEquipamentoUpdateManyWithoutCautelaNestedInput
   respostas?: Prisma.RespostaChecklistUpdateManyWithoutCautelaNestedInput
+  acessorios?: Prisma.CautelaAcessorioUpdateManyWithoutCautelaNestedInput
 }
 
 export type CautelaUncheckedUpdateWithoutUsuarioInput = {
@@ -1043,6 +1159,7 @@ export type CautelaUncheckedUpdateWithoutUsuarioInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   equipamentos?: Prisma.CautelaEquipamentoUncheckedUpdateManyWithoutCautelaNestedInput
   respostas?: Prisma.RespostaChecklistUncheckedUpdateManyWithoutCautelaNestedInput
+  acessorios?: Prisma.CautelaAcessorioUncheckedUpdateManyWithoutCautelaNestedInput
 }
 
 export type CautelaUncheckedUpdateManyWithoutUsuarioInput = {
@@ -1062,7 +1179,6 @@ export type CautelaUncheckedUpdateManyWithoutUsuarioInput = {
 
 export type CautelaUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  numero?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusCautelaFieldUpdateOperationsInput | $Enums.StatusCautela
   data_emissao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   data_retirada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1075,6 +1191,7 @@ export type CautelaUpdateWithoutCreatedByInput = {
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutCautelasComoResponsavelNestedInput
   equipamentos?: Prisma.CautelaEquipamentoUpdateManyWithoutCautelaNestedInput
   respostas?: Prisma.RespostaChecklistUpdateManyWithoutCautelaNestedInput
+  acessorios?: Prisma.CautelaAcessorioUpdateManyWithoutCautelaNestedInput
 }
 
 export type CautelaUncheckedUpdateWithoutCreatedByInput = {
@@ -1092,6 +1209,7 @@ export type CautelaUncheckedUpdateWithoutCreatedByInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   equipamentos?: Prisma.CautelaEquipamentoUncheckedUpdateManyWithoutCautelaNestedInput
   respostas?: Prisma.RespostaChecklistUncheckedUpdateManyWithoutCautelaNestedInput
+  acessorios?: Prisma.CautelaAcessorioUncheckedUpdateManyWithoutCautelaNestedInput
 }
 
 export type CautelaUncheckedUpdateManyWithoutCreatedByInput = {
@@ -1117,11 +1235,13 @@ export type CautelaUncheckedUpdateManyWithoutCreatedByInput = {
 export type CautelaCountOutputType = {
   equipamentos: number
   respostas: number
+  acessorios: number
 }
 
 export type CautelaCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   equipamentos?: boolean | CautelaCountOutputTypeCountEquipamentosArgs
   respostas?: boolean | CautelaCountOutputTypeCountRespostasArgs
+  acessorios?: boolean | CautelaCountOutputTypeCountAcessoriosArgs
 }
 
 /**
@@ -1148,6 +1268,13 @@ export type CautelaCountOutputTypeCountRespostasArgs<ExtArgs extends runtime.Typ
   where?: Prisma.RespostaChecklistWhereInput
 }
 
+/**
+ * CautelaCountOutputType without action
+ */
+export type CautelaCountOutputTypeCountAcessoriosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CautelaAcessorioWhereInput
+}
+
 
 export type CautelaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1167,6 +1294,7 @@ export type CautelaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdBy?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   equipamentos?: boolean | Prisma.Cautela$equipamentosArgs<ExtArgs>
   respostas?: boolean | Prisma.Cautela$respostasArgs<ExtArgs>
+  acessorios?: boolean | Prisma.Cautela$acessoriosArgs<ExtArgs>
   _count?: boolean | Prisma.CautelaCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cautela"]>
 
@@ -1228,6 +1356,7 @@ export type CautelaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdBy?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   equipamentos?: boolean | Prisma.Cautela$equipamentosArgs<ExtArgs>
   respostas?: boolean | Prisma.Cautela$respostasArgs<ExtArgs>
+  acessorios?: boolean | Prisma.Cautela$acessoriosArgs<ExtArgs>
   _count?: boolean | Prisma.CautelaCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CautelaIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1246,6 +1375,7 @@ export type $CautelaPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     createdBy: Prisma.$UsuarioPayload<ExtArgs>
     equipamentos: Prisma.$CautelaEquipamentoPayload<ExtArgs>[]
     respostas: Prisma.$RespostaChecklistPayload<ExtArgs>[]
+    acessorios: Prisma.$CautelaAcessorioPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1659,6 +1789,7 @@ export interface Prisma__CautelaClient<T, Null = never, ExtArgs extends runtime.
   createdBy<T extends Prisma.UsuarioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsuarioDefaultArgs<ExtArgs>>): Prisma.Prisma__UsuarioClient<runtime.Types.Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   equipamentos<T extends Prisma.Cautela$equipamentosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cautela$equipamentosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CautelaEquipamentoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   respostas<T extends Prisma.Cautela$respostasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cautela$respostasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RespostaChecklistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  acessorios<T extends Prisma.Cautela$acessoriosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cautela$acessoriosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CautelaAcessorioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2147,6 +2278,30 @@ export type Cautela$respostasArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.RespostaChecklistScalarFieldEnum | Prisma.RespostaChecklistScalarFieldEnum[]
+}
+
+/**
+ * Cautela.acessorios
+ */
+export type Cautela$acessoriosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CautelaAcessorio
+   */
+  select?: Prisma.CautelaAcessorioSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CautelaAcessorio
+   */
+  omit?: Prisma.CautelaAcessorioOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CautelaAcessorioInclude<ExtArgs> | null
+  where?: Prisma.CautelaAcessorioWhereInput
+  orderBy?: Prisma.CautelaAcessorioOrderByWithRelationInput | Prisma.CautelaAcessorioOrderByWithRelationInput[]
+  cursor?: Prisma.CautelaAcessorioWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CautelaAcessorioScalarFieldEnum | Prisma.CautelaAcessorioScalarFieldEnum[]
 }
 
 /**

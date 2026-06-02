@@ -1,4 +1,4 @@
-import prisma from "@/src/lib/prisma";
+import { prisma } from "@/src/lib/prisma";
 
 export async function list(tipo?: string) {
   const where: Record<string, unknown> = { deletedAt: null };
@@ -32,10 +32,16 @@ export async function create(data: {
   });
 }
 
-export async function update(id: string, data: { nome?: string; perguntas?: { pergunta: string; obrigatoria: boolean; ordem: number }[] }) {
+export async function update(
+  id: string,
+  data: { nome?: string; perguntas?: { pergunta: string; obrigatoria: boolean; ordem: number }[] },
+) {
   return prisma.$transaction(async (tx) => {
     if (data.perguntas) {
-      await tx.checklistPergunta.updateMany({ where: { checklist_id: id }, data: { deletedAt: new Date() } });
+      await tx.checklistPergunta.updateMany({
+        where: { checklist_id: id },
+        data: { deletedAt: new Date() },
+      });
       await tx.checklistPergunta.createMany({
         data: data.perguntas.map((p) => ({ ...p, checklist_id: id })),
       });

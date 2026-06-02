@@ -145,7 +145,7 @@ model ChecklistPergunta {
 
 model Cautela {
   id                    String        @id @default(uuid())
-  numero                Int           @unique
+  numero                Int           @unique @default(autoincrement())
   usuario_id            String
   status                StatusCautela @default(ABERTA)
   data_emissao          DateTime      @default(now())

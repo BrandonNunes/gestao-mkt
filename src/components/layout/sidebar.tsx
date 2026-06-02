@@ -26,7 +26,8 @@ export function Sidebar() {
   return (
     <aside className="w-64 min-h-screen border-r border-border bg-muted/30 p-4 hidden md:block">
       <div className="mb-8 px-2">
-        <h1 className="text-lg font-bold text-foreground">Cautela MKT</h1>
+        {/* <h1 className="text-lg font-bold text-foreground">Cautela MKT</h1> */}
+        <img src="logos/logo_mkt.png" alt="Cautela MKT" className="h-26 w-auto" />
       </div>
       <nav className="space-y-1">
         {visibleNav.map((item) => (

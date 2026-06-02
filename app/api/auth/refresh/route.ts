@@ -13,7 +13,7 @@ export async function POST(_request: NextRequest) {
 
     const result = await authService.refreshSession(refreshToken);
     const response = NextResponse.json({ accessToken: result.accessToken, usuario: result.usuario });
-    response.headers.set("Set-Cookie", setRefreshTokenCookie(refreshToken));
+    response.headers.set("Set-Cookie", setRefreshTokenCookie(result.refreshToken));
     return response;
   } catch (err) {
     return NextResponse.json({ error: err instanceof Error ? err.message : "Erro" }, { status: 401 });

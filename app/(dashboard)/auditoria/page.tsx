@@ -24,7 +24,7 @@ export default function AuditoriaPage() {
             <div className="p-4 text-center text-gray-500">Carregando...</div>
           ) : (
             <table className="w-full text-sm">
-              <thead className="bg-gray-50">
+              <thead className="bg-muted">
                 <tr>
                   <th className="text-left p-3">Entidade</th>
                   <th className="text-left p-3">Ação</th>
@@ -34,7 +34,7 @@ export default function AuditoriaPage() {
               </thead>
               <tbody>
                 {registros.map((r: any) => (
-                  <tr key={r.id} className="border-t">
+                  <tr key={r.id} className="border-t border-border">
                     <td className="p-3">{r.entidade}</td>
                     <td className="p-3">{r.acao}</td>
                     <td className="p-3">{r.usuario?.nome}</td>

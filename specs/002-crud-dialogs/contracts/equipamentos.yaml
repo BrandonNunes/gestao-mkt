@@ -1,0 +1,54 @@
+# Contrato de API: Equipamentos (CRUD via Diálogo)
+# Feature: 002-crud-dialogs
+# Endpoints consumidos pelo Dialog de cadastro de equipamento
+
+# POST /api/equipamentos
+create_equipamento:
+  method: POST
+  auth: Bearer <accessToken>
+  role: GESTOR
+  request:
+    body:
+      codigo_patrimonial: string (required, unique)
+      nome: string (required, min: 3)
+      categoria_id: string (required, UUID)
+      marca: string (optional)
+      modelo: string (optional)
+      numero_serie: string (optional)
+      descricao: string (optional)
+      data_aquisicao: string (optional, ISO 8601)
+      valor_aquisicao: number (optional, positive)
+      localizacao: string (optional)
+      observacoes: string (optional)
+  responses:
+    201:
+      body:
+        id: string (UUID)
+        codigo_patrimonial: string
+        nome: string
+        status: "DISPONIVEL"
+        # ... demais campos do equipamento criado
+    400:
+      body:
+        error: string (mensagem de validação)
+    409:
+      body:
+        error: string ("Código patrimonial já cadastrado")
+
+# GET /api/categorias (consumido pelo seletor de categoria)
+list_categorias:
+  method: GET
+  auth: Bearer <accessToken>
+  role: GESTOR | COLABORADOR
+  request:
+    query:
+      limit: number (default: 50)
+  responses:
+    200:
+      body:
+        data: array
+          id: string (UUID)
+          nome: string
+          _count:
+            equipamentos: number
+        total: number

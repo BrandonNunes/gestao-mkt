@@ -1,0 +1,48 @@
+# Contrato de API: Checklists (CRUD via Diálogo)
+# Feature: 002-crud-dialogs
+# Endpoints consumidos pelo Dialog de cadastro de checklist com perguntas
+
+# POST /api/checklists
+create_checklist:
+  method: POST
+  auth: Bearer <accessToken>
+  role: GESTOR
+  request:
+    body:
+      nome: string (required, min: 3)
+      tipo: "SAIDA" | "DEVOLUCAO" (required)
+      perguntas:
+        - pergunta: string (required, min: 5)
+          obrigatoria: boolean (default: true)
+          ordem: number (required, integer)
+  responses:
+    201:
+      body:
+        id: string (UUID)
+        nome: string
+        tipo: string
+        perguntas:
+          - id: string (UUID)
+            pergunta: string
+            obrigatoria: boolean
+            ordem: number
+    400:
+      body:
+        error: string (mensagem de validação Zod)
+
+# GET /api/checklists
+list_checklists:
+  method: GET
+  auth: Bearer <accessToken>
+  role: GESTOR | COLABORADOR
+  request:
+    query:
+      tipo: string (optional, "SAIDA" | "DEVOLUCAO")
+  responses:
+    200:
+      body: array
+        - id: string (UUID)
+          nome: string
+          tipo: string
+          _count:
+            perguntas: number

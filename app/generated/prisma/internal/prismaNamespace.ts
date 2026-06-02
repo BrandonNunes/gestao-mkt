@@ -392,6 +392,7 @@ export const ModelName = {
   ChecklistPergunta: 'ChecklistPergunta',
   Cautela: 'Cautela',
   CautelaEquipamento: 'CautelaEquipamento',
+  CautelaAcessorio: 'CautelaAcessorio',
   RespostaChecklist: 'RespostaChecklist',
   Historico: 'Historico'
 } as const
@@ -409,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "usuario" | "categoria" | "equipamento" | "acessorio" | "checklist" | "checklistPergunta" | "cautela" | "cautelaEquipamento" | "respostaChecklist" | "historico"
+    modelProps: "usuario" | "categoria" | "equipamento" | "acessorio" | "checklist" | "checklistPergunta" | "cautela" | "cautelaEquipamento" | "cautelaAcessorio" | "respostaChecklist" | "historico"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1005,6 +1006,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CautelaAcessorio: {
+      payload: Prisma.$CautelaAcessorioPayload<ExtArgs>
+      fields: Prisma.CautelaAcessorioFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CautelaAcessorioFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CautelaAcessorioPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CautelaAcessorioFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CautelaAcessorioPayload>
+        }
+        findFirst: {
+          args: Prisma.CautelaAcessorioFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CautelaAcessorioPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CautelaAcessorioFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CautelaAcessorioPayload>
+        }
+        findMany: {
+          args: Prisma.CautelaAcessorioFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CautelaAcessorioPayload>[]
+        }
+        create: {
+          args: Prisma.CautelaAcessorioCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CautelaAcessorioPayload>
+        }
+        createMany: {
+          args: Prisma.CautelaAcessorioCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CautelaAcessorioCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CautelaAcessorioPayload>[]
+        }
+        delete: {
+          args: Prisma.CautelaAcessorioDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CautelaAcessorioPayload>
+        }
+        update: {
+          args: Prisma.CautelaAcessorioUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CautelaAcessorioPayload>
+        }
+        deleteMany: {
+          args: Prisma.CautelaAcessorioDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CautelaAcessorioUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CautelaAcessorioUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CautelaAcessorioPayload>[]
+        }
+        upsert: {
+          args: Prisma.CautelaAcessorioUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CautelaAcessorioPayload>
+        }
+        aggregate: {
+          args: Prisma.CautelaAcessorioAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCautelaAcessorio>
+        }
+        groupBy: {
+          args: Prisma.CautelaAcessorioGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CautelaAcessorioGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CautelaAcessorioCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CautelaAcessorioCountAggregateOutputType> | number
+        }
+      }
+    }
     RespostaChecklist: {
       payload: Prisma.$RespostaChecklistPayload<ExtArgs>
       fields: Prisma.RespostaChecklistFieldRefs
@@ -1311,6 +1386,15 @@ export const CautelaEquipamentoScalarFieldEnum = {
 } as const
 
 export type CautelaEquipamentoScalarFieldEnum = (typeof CautelaEquipamentoScalarFieldEnum)[keyof typeof CautelaEquipamentoScalarFieldEnum]
+
+
+export const CautelaAcessorioScalarFieldEnum = {
+  id: 'id',
+  cautela_id: 'cautela_id',
+  acessorio_id: 'acessorio_id'
+} as const
+
+export type CautelaAcessorioScalarFieldEnum = (typeof CautelaAcessorioScalarFieldEnum)[keyof typeof CautelaAcessorioScalarFieldEnum]
 
 
 export const RespostaChecklistScalarFieldEnum = {
@@ -1661,6 +1745,7 @@ export type GlobalOmitConfig = {
   checklistPergunta?: Prisma.ChecklistPerguntaOmit
   cautela?: Prisma.CautelaOmit
   cautelaEquipamento?: Prisma.CautelaEquipamentoOmit
+  cautelaAcessorio?: Prisma.CautelaAcessorioOmit
   respostaChecklist?: Prisma.RespostaChecklistOmit
   historico?: Prisma.HistoricoOmit
 }

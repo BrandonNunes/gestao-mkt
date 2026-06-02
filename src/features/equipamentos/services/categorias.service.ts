@@ -1,4 +1,4 @@
-import prisma from "@/src/lib/prisma";
+import { prisma } from "@/src/lib/prisma";
 
 export async function list(page = 1, limit = 50, search?: string) {
   const where: Record<string, unknown> = { deletedAt: null };

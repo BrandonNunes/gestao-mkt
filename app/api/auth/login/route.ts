@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
     const result = await authService.login(parsed.data.email, parsed.data.senha);
     const response = NextResponse.json(result);
-    response.headers.set("Set-Cookie", setRefreshTokenCookie(result.accessToken));
+    response.headers.set("Set-Cookie", setRefreshTokenCookie(result.refreshToken));
     return response;
   } catch (err) {
     return NextResponse.json({ error: err instanceof Error ? err.message : "Erro interno" }, { status: 401 });

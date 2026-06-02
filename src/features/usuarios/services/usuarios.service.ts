@@ -1,4 +1,4 @@
-import prisma from "@/src/lib/prisma";
+import { prisma } from "@/src/lib/prisma";
 import bcrypt from "bcryptjs";
 import type { UsuarioAdmin } from "../models";
 
@@ -16,7 +16,13 @@ function toAdmin(user: Record<string, unknown>): UsuarioAdmin {
   };
 }
 
-export async function list(params: { page: number; limit: number; search?: string; perfil?: string; status?: string }) {
+export async function list(params: {
+  page: number;
+  limit: number;
+  search?: string;
+  perfil?: string;
+  status?: string;
+}) {
   const { page, limit, search, perfil, status } = params;
   const where: Record<string, unknown> = { deletedAt: null };
 

@@ -59,6 +59,7 @@ export const ModelName = {
   ChecklistPergunta: 'ChecklistPergunta',
   Cautela: 'Cautela',
   CautelaEquipamento: 'CautelaEquipamento',
+  CautelaAcessorio: 'CautelaAcessorio',
   RespostaChecklist: 'RespostaChecklist',
   Historico: 'Historico'
 } as const
@@ -198,6 +199,15 @@ export const CautelaEquipamentoScalarFieldEnum = {
 } as const
 
 export type CautelaEquipamentoScalarFieldEnum = (typeof CautelaEquipamentoScalarFieldEnum)[keyof typeof CautelaEquipamentoScalarFieldEnum]
+
+
+export const CautelaAcessorioScalarFieldEnum = {
+  id: 'id',
+  cautela_id: 'cautela_id',
+  acessorio_id: 'acessorio_id'
+} as const
+
+export type CautelaAcessorioScalarFieldEnum = (typeof CautelaAcessorioScalarFieldEnum)[keyof typeof CautelaAcessorioScalarFieldEnum]
 
 
 export const RespostaChecklistScalarFieldEnum = {

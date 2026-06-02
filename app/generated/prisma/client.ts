@@ -82,6 +82,11 @@ export type Cautela = Prisma.CautelaModel
  */
 export type CautelaEquipamento = Prisma.CautelaEquipamentoModel
 /**
+ * Model CautelaAcessorio
+ * 
+ */
+export type CautelaAcessorio = Prisma.CautelaAcessorioModel
+/**
  * Model RespostaChecklist
  * 
  */

@@ -5,6 +5,7 @@ export interface LoginCredentials {
 
 export interface AuthTokens {
   accessToken: string;
+  refreshToken: string;
   usuario: UsuarioPublic;
 }
 

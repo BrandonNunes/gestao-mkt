@@ -1,6 +1,12 @@
-import prisma from "@/src/lib/prisma";
+import { prisma } from "@/src/lib/prisma";
 
-export async function log(entidade: string, entidade_id: string, acao: string, usuario_id: string, detalhes?: Record<string, unknown>) {
+export async function log(
+  entidade: string,
+  entidade_id: string,
+  acao: string,
+  usuario_id: string,
+  detalhes?: Record<string, unknown>,
+) {
   return prisma.historico.create({
     data: { entidade, entidade_id, acao, usuario_id, detalhes: detalhes ?? undefined },
   });

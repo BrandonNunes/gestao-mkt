@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { verifyAccessToken } from "@/src/lib/auth";
 
-const protectedPaths = ["/equipamentos", "/categorias", "/usuarios", "/cautelas", "/checklists", "/relatorios", "/auditoria"];
+const protectedPaths = ["/", "/equipamentos", "/categorias", "/usuarios", "/cautelas", "/checklists", "/relatorios", "/auditoria"];
 const publicPaths = ["/login", "/recuperar-senha"];
 
 export default async function middleware(req: NextRequest) {
@@ -12,10 +12,10 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  const isProtected = protectedPaths.some((p) => path.startsWith(`/dashboard${p}`) || path === "/dashboard");
-  const isPublic = publicPaths.some((p) => path.startsWith(`/auth${p}`)) || path === "/";
+  const isProtected = protectedPaths.some((p) => path === p || (p !== "/" && path.startsWith(p + "/")));
+  const isPublic = publicPaths.some((p) => path.startsWith(p));
 
-  if (!isProtected && !path.startsWith("/dashboard")) {
+  if (!isProtected) {
     return NextResponse.next();
   }
 

@@ -1,4 +1,4 @@
-import prisma from "@/src/lib/prisma";
+import { prisma } from "@/src/lib/prisma";
 
 export async function listByEquipamento(equipamento_id: string) {
   return prisma.acessorio.findMany({
@@ -7,7 +7,10 @@ export async function listByEquipamento(equipamento_id: string) {
   });
 }
 
-export async function create(equipamento_id: string, data: { nome: string; codigo_interno?: string; descricao?: string }) {
+export async function create(
+  equipamento_id: string,
+  data: { nome: string; codigo_interno?: string; descricao?: string },
+) {
   return prisma.acessorio.create({ data: { ...data, equipamento_id } });
 }
 

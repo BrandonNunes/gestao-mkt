@@ -133,7 +133,7 @@ export default function EquipamentoDetailPage() {
         <CardContent className="p-0">
           {equip.acessorios?.length > 0 ? (
             <table className="w-full text-sm">
-              <thead className="bg-gray-50">
+              <thead className="bg-muted">
                 <tr>
                   <th className="text-left p-3">Nome</th>
                   <th className="text-left p-3">Codigo Interno</th>
@@ -143,7 +143,7 @@ export default function EquipamentoDetailPage() {
               </thead>
               <tbody>
                 {equip.acessorios.map((a) => (
-                  <tr key={a.id} className="border-t">
+                  <tr key={a.id} className="border-t border-border">
                     <td className="p-3">{a.nome}</td>
                     <td className="p-3">{a.codigo_interno || "-"}</td>
                     <td className="p-3">{a.descricao || "-"}</td>

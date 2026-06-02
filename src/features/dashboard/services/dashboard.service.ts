@@ -1,4 +1,4 @@
-import prisma from "@/src/lib/prisma";
+import { prisma } from "@/src/lib/prisma";
 import { StatusCautela } from "@/src/lib/constants";
 
 export async function getIndicadores() {

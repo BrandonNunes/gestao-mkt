@@ -215,6 +215,7 @@ export type AcessorioWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Acessorio"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Acessorio"> | Date | string | null
   equipamento?: Prisma.XOR<Prisma.EquipamentoScalarRelationFilter, Prisma.EquipamentoWhereInput>
+  cautelaAcessorios?: Prisma.CautelaAcessorioListRelationFilter
 }
 
 export type AcessorioOrderByWithRelationInput = {
@@ -228,6 +229,7 @@ export type AcessorioOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   equipamento?: Prisma.EquipamentoOrderByWithRelationInput
+  cautelaAcessorios?: Prisma.CautelaAcessorioOrderByRelationAggregateInput
 }
 
 export type AcessorioWhereUniqueInput = Prisma.AtLeast<{
@@ -244,6 +246,7 @@ export type AcessorioWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Acessorio"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Acessorio"> | Date | string | null
   equipamento?: Prisma.XOR<Prisma.EquipamentoScalarRelationFilter, Prisma.EquipamentoWhereInput>
+  cautelaAcessorios?: Prisma.CautelaAcessorioListRelationFilter
 }, "id">
 
 export type AcessorioOrderByWithAggregationInput = {
@@ -286,6 +289,7 @@ export type AcessorioCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   equipamento: Prisma.EquipamentoCreateNestedOneWithoutAcessoriosInput
+  cautelaAcessorios?: Prisma.CautelaAcessorioCreateNestedManyWithoutAcessorioInput
 }
 
 export type AcessorioUncheckedCreateInput = {
@@ -298,6 +302,7 @@ export type AcessorioUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  cautelaAcessorios?: Prisma.CautelaAcessorioUncheckedCreateNestedManyWithoutAcessorioInput
 }
 
 export type AcessorioUpdateInput = {
@@ -310,6 +315,7 @@ export type AcessorioUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   equipamento?: Prisma.EquipamentoUpdateOneRequiredWithoutAcessoriosNestedInput
+  cautelaAcessorios?: Prisma.CautelaAcessorioUpdateManyWithoutAcessorioNestedInput
 }
 
 export type AcessorioUncheckedUpdateInput = {
@@ -322,6 +328,7 @@ export type AcessorioUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cautelaAcessorios?: Prisma.CautelaAcessorioUncheckedUpdateManyWithoutAcessorioNestedInput
 }
 
 export type AcessorioCreateManyInput = {
@@ -405,6 +412,11 @@ export type AcessorioMinOrderByAggregateInput = {
   deletedAt?: Prisma.SortOrder
 }
 
+export type AcessorioScalarRelationFilter = {
+  is?: Prisma.AcessorioWhereInput
+  isNot?: Prisma.AcessorioWhereInput
+}
+
 export type AcessorioCreateNestedManyWithoutEquipamentoInput = {
   create?: Prisma.XOR<Prisma.AcessorioCreateWithoutEquipamentoInput, Prisma.AcessorioUncheckedCreateWithoutEquipamentoInput> | Prisma.AcessorioCreateWithoutEquipamentoInput[] | Prisma.AcessorioUncheckedCreateWithoutEquipamentoInput[]
   connectOrCreate?: Prisma.AcessorioCreateOrConnectWithoutEquipamentoInput | Prisma.AcessorioCreateOrConnectWithoutEquipamentoInput[]
@@ -447,6 +459,20 @@ export type AcessorioUncheckedUpdateManyWithoutEquipamentoNestedInput = {
   deleteMany?: Prisma.AcessorioScalarWhereInput | Prisma.AcessorioScalarWhereInput[]
 }
 
+export type AcessorioCreateNestedOneWithoutCautelaAcessoriosInput = {
+  create?: Prisma.XOR<Prisma.AcessorioCreateWithoutCautelaAcessoriosInput, Prisma.AcessorioUncheckedCreateWithoutCautelaAcessoriosInput>
+  connectOrCreate?: Prisma.AcessorioCreateOrConnectWithoutCautelaAcessoriosInput
+  connect?: Prisma.AcessorioWhereUniqueInput
+}
+
+export type AcessorioUpdateOneRequiredWithoutCautelaAcessoriosNestedInput = {
+  create?: Prisma.XOR<Prisma.AcessorioCreateWithoutCautelaAcessoriosInput, Prisma.AcessorioUncheckedCreateWithoutCautelaAcessoriosInput>
+  connectOrCreate?: Prisma.AcessorioCreateOrConnectWithoutCautelaAcessoriosInput
+  upsert?: Prisma.AcessorioUpsertWithoutCautelaAcessoriosInput
+  connect?: Prisma.AcessorioWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcessorioUpdateToOneWithWhereWithoutCautelaAcessoriosInput, Prisma.AcessorioUpdateWithoutCautelaAcessoriosInput>, Prisma.AcessorioUncheckedUpdateWithoutCautelaAcessoriosInput>
+}
+
 export type AcessorioCreateWithoutEquipamentoInput = {
   id?: string
   nome: string
@@ -456,6 +482,7 @@ export type AcessorioCreateWithoutEquipamentoInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  cautelaAcessorios?: Prisma.CautelaAcessorioCreateNestedManyWithoutAcessorioInput
 }
 
 export type AcessorioUncheckedCreateWithoutEquipamentoInput = {
@@ -467,6 +494,7 @@ export type AcessorioUncheckedCreateWithoutEquipamentoInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  cautelaAcessorios?: Prisma.CautelaAcessorioUncheckedCreateNestedManyWithoutAcessorioInput
 }
 
 export type AcessorioCreateOrConnectWithoutEquipamentoInput = {
@@ -510,6 +538,70 @@ export type AcessorioScalarWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"Acessorio"> | Date | string | null
 }
 
+export type AcessorioCreateWithoutCautelaAcessoriosInput = {
+  id?: string
+  nome: string
+  codigo_interno?: string | null
+  descricao?: string | null
+  status?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  equipamento: Prisma.EquipamentoCreateNestedOneWithoutAcessoriosInput
+}
+
+export type AcessorioUncheckedCreateWithoutCautelaAcessoriosInput = {
+  id?: string
+  equipamento_id: string
+  nome: string
+  codigo_interno?: string | null
+  descricao?: string | null
+  status?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+}
+
+export type AcessorioCreateOrConnectWithoutCautelaAcessoriosInput = {
+  where: Prisma.AcessorioWhereUniqueInput
+  create: Prisma.XOR<Prisma.AcessorioCreateWithoutCautelaAcessoriosInput, Prisma.AcessorioUncheckedCreateWithoutCautelaAcessoriosInput>
+}
+
+export type AcessorioUpsertWithoutCautelaAcessoriosInput = {
+  update: Prisma.XOR<Prisma.AcessorioUpdateWithoutCautelaAcessoriosInput, Prisma.AcessorioUncheckedUpdateWithoutCautelaAcessoriosInput>
+  create: Prisma.XOR<Prisma.AcessorioCreateWithoutCautelaAcessoriosInput, Prisma.AcessorioUncheckedCreateWithoutCautelaAcessoriosInput>
+  where?: Prisma.AcessorioWhereInput
+}
+
+export type AcessorioUpdateToOneWithWhereWithoutCautelaAcessoriosInput = {
+  where?: Prisma.AcessorioWhereInput
+  data: Prisma.XOR<Prisma.AcessorioUpdateWithoutCautelaAcessoriosInput, Prisma.AcessorioUncheckedUpdateWithoutCautelaAcessoriosInput>
+}
+
+export type AcessorioUpdateWithoutCautelaAcessoriosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  codigo_interno?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descricao?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  equipamento?: Prisma.EquipamentoUpdateOneRequiredWithoutAcessoriosNestedInput
+}
+
+export type AcessorioUncheckedUpdateWithoutCautelaAcessoriosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  equipamento_id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  codigo_interno?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descricao?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
 export type AcessorioCreateManyEquipamentoInput = {
   id?: string
   nome: string
@@ -530,6 +622,7 @@ export type AcessorioUpdateWithoutEquipamentoInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cautelaAcessorios?: Prisma.CautelaAcessorioUpdateManyWithoutAcessorioNestedInput
 }
 
 export type AcessorioUncheckedUpdateWithoutEquipamentoInput = {
@@ -541,6 +634,7 @@ export type AcessorioUncheckedUpdateWithoutEquipamentoInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cautelaAcessorios?: Prisma.CautelaAcessorioUncheckedUpdateManyWithoutAcessorioNestedInput
 }
 
 export type AcessorioUncheckedUpdateManyWithoutEquipamentoInput = {
@@ -555,6 +649,35 @@ export type AcessorioUncheckedUpdateManyWithoutEquipamentoInput = {
 }
 
 
+/**
+ * Count Type AcessorioCountOutputType
+ */
+
+export type AcessorioCountOutputType = {
+  cautelaAcessorios: number
+}
+
+export type AcessorioCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  cautelaAcessorios?: boolean | AcessorioCountOutputTypeCountCautelaAcessoriosArgs
+}
+
+/**
+ * AcessorioCountOutputType without action
+ */
+export type AcessorioCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AcessorioCountOutputType
+   */
+  select?: Prisma.AcessorioCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * AcessorioCountOutputType without action
+ */
+export type AcessorioCountOutputTypeCountCautelaAcessoriosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CautelaAcessorioWhereInput
+}
+
 
 export type AcessorioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -567,6 +690,8 @@ export type AcessorioSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   updatedAt?: boolean
   deletedAt?: boolean
   equipamento?: boolean | Prisma.EquipamentoDefaultArgs<ExtArgs>
+  cautelaAcessorios?: boolean | Prisma.Acessorio$cautelaAcessoriosArgs<ExtArgs>
+  _count?: boolean | Prisma.AcessorioCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["acessorio"]>
 
 export type AcessorioSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -610,6 +735,8 @@ export type AcessorioSelectScalar = {
 export type AcessorioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "equipamento_id" | "nome" | "codigo_interno" | "descricao" | "status" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["acessorio"]>
 export type AcessorioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   equipamento?: boolean | Prisma.EquipamentoDefaultArgs<ExtArgs>
+  cautelaAcessorios?: boolean | Prisma.Acessorio$cautelaAcessoriosArgs<ExtArgs>
+  _count?: boolean | Prisma.AcessorioCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AcessorioIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   equipamento?: boolean | Prisma.EquipamentoDefaultArgs<ExtArgs>
@@ -622,6 +749,7 @@ export type $AcessorioPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   name: "Acessorio"
   objects: {
     equipamento: Prisma.$EquipamentoPayload<ExtArgs>
+    cautelaAcessorios: Prisma.$CautelaAcessorioPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1028,6 +1156,7 @@ readonly fields: AcessorioFieldRefs;
 export interface Prisma__AcessorioClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   equipamento<T extends Prisma.EquipamentoDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EquipamentoDefaultArgs<ExtArgs>>): Prisma.Prisma__EquipamentoClient<runtime.Types.Result.GetResult<Prisma.$EquipamentoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  cautelaAcessorios<T extends Prisma.Acessorio$cautelaAcessoriosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Acessorio$cautelaAcessoriosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CautelaAcessorioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1464,6 +1593,30 @@ export type AcessorioDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many Acessorios to delete.
    */
   limit?: number
+}
+
+/**
+ * Acessorio.cautelaAcessorios
+ */
+export type Acessorio$cautelaAcessoriosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CautelaAcessorio
+   */
+  select?: Prisma.CautelaAcessorioSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CautelaAcessorio
+   */
+  omit?: Prisma.CautelaAcessorioOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CautelaAcessorioInclude<ExtArgs> | null
+  where?: Prisma.CautelaAcessorioWhereInput
+  orderBy?: Prisma.CautelaAcessorioOrderByWithRelationInput | Prisma.CautelaAcessorioOrderByWithRelationInput[]
+  cursor?: Prisma.CautelaAcessorioWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CautelaAcessorioScalarFieldEnum | Prisma.CautelaAcessorioScalarFieldEnum[]
 }
 
 /**

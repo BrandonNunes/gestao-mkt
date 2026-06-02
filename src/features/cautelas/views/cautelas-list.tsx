@@ -46,7 +46,7 @@ export default function CautelasList() {
             <div className="p-4 text-center text-gray-500">Nenhuma cautela encontrada.</div>
           ) : (
             <table className="w-full text-sm">
-              <thead className="bg-gray-50">
+              <thead className="bg-muted">
                 <tr>
                   <th className="text-left p-3">Nº</th>
                   <th className="text-left p-3">Responsável</th>
@@ -58,7 +58,7 @@ export default function CautelasList() {
               </thead>
               <tbody>
                 {cautelas.map((c: any) => (
-                  <tr key={c.id} className="border-t">
+                  <tr key={c.id} className="border-t border-border">
                     <td className="p-3 font-mono">{c.numero}</td>
                     <td className="p-3">{c.usuario?.nome}</td>
                     <td className="p-3">

@@ -1,7 +1,6 @@
+import { prisma } from "@/src/lib/prisma";
 import { PrismaClient } from "../app/generated/prisma/client";
 import bcrypt from "bcryptjs";
-
-const prisma = new PrismaClient();
 
 async function main() {
   const hash = await bcrypt.hash("admin123", 12);
