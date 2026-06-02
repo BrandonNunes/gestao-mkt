@@ -13,7 +13,8 @@ export async function POST(request: NextRequest) {
 
     const result = await authService.login(parsed.data.email, parsed.data.senha);
     const response = NextResponse.json(result);
-    response.headers.set("Set-Cookie", setRefreshTokenCookie(result.refreshToken));
+    response.headers.append("Set-Cookie", setRefreshTokenCookie(result.refreshToken));
+    response.headers.append("Set-Cookie", `accessToken=${result.accessToken}; HttpOnly; Path=/; Secure; SameSite=Lax; Max-Age=900`);
     return response;
   } catch (err) {
     return NextResponse.json({ error: err instanceof Error ? err.message : "Erro interno" }, { status: 401 });
