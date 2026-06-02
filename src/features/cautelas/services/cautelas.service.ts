@@ -1,9 +1,10 @@
-import prisma from "@/src/lib/prisma";
+import { prisma } from "@/src/lib/prisma";
 import { StatusCautela, StatusEquipamento } from "@/src/lib/constants";
 
 export async function create(data: {
   usuario_id: string;
   equipamento_ids: string[];
+  acessorio_ids?: string[];
   data_prevista_retorno: string;
 }) {
   const equipamentos = await prisma.equipamento.findMany({
@@ -13,7 +14,7 @@ export async function create(data: {
   const indisponiveis = equipamentos.filter((e) => e.status !== StatusEquipamento.DISPONIVEL);
   if (indisponiveis.length > 0) {
     throw new Error(
-      `Equipamentos indisponíveis: ${indisponiveis.map((e) => `${e.nome} (${e.status})`).join(", ")}`,
+      `Equipamentos indisponiveis: ${indisponiveis.map((e) => `${e.nome} (${e.status})`).join(", ")}`,
     );
   }
 
@@ -25,6 +26,11 @@ export async function create(data: {
       equipamentos: {
         create: data.equipamento_ids.map((eid) => ({ equipamento_id: eid })),
       },
+      acessorios: data.acessorio_ids?.length
+        ? {
+            create: data.acessorio_ids.map((aid) => ({ acessorio_id: aid })),
+          }
+        : undefined,
     },
     include: { equipamentos: true, usuario: true },
   });
@@ -52,7 +58,9 @@ export async function emitir(
   const respondidasIds = respostas.map((r) => r.pergunta_id);
   const faltantes = obrigatorias.filter((p) => !respondidasIds.includes(p.id));
   if (faltantes.length > 0) {
-    throw new Error(`Perguntas obrigatórias não respondidas: ${faltantes.map((p) => p.pergunta).join(", ")}`);
+    throw new Error(
+      `Perguntas obrigatórias não respondidas: ${faltantes.map((p) => p.pergunta).join(", ")}`,
+    );
   }
 
   const equipamentos = await prisma.equipamento.findMany({
@@ -60,7 +68,9 @@ export async function emitir(
   });
   const indisponiveis = equipamentos.filter((e) => e.status !== StatusEquipamento.DISPONIVEL);
   if (indisponiveis.length > 0) {
-    throw new Error(`Equipamentos indisponíveis: ${indisponiveis.map((e) => `${e.nome} (${e.status})`).join(", ")}`);
+    throw new Error(
+      `Equipamentos indisponíveis: ${indisponiveis.map((e) => `${e.nome} (${e.status})`).join(", ")}`,
+    );
   }
 
   return prisma.$transaction(async (tx) => {
@@ -113,7 +123,9 @@ export async function devolver(
   const respondidasIds = respostas.map((r) => r.pergunta_id);
   const faltantes = obrigatorias.filter((p) => !respondidasIds.includes(p.id));
   if (faltantes.length > 0) {
-    throw new Error(`Perguntas obrigatórias não respondidas: ${faltantes.map((p) => p.pergunta).join(", ")}`);
+    throw new Error(
+      `Perguntas obrigatórias não respondidas: ${faltantes.map((p) => p.pergunta).join(", ")}`,
+    );
   }
 
   const novoStatus = tem_avarias ? StatusCautela.PENDENTE : StatusCautela.FINALIZADA;
@@ -138,9 +150,10 @@ export async function devolver(
       data: {
         status: novoStatus,
         data_retorno: new Date(),
-        observacoes: [observacoes, avarias_descricao ? `Avarias: ${avarias_descricao}` : null]
-          .filter(Boolean)
-          .join("\n") || undefined,
+        observacoes:
+          [observacoes, avarias_descricao ? `Avarias: ${avarias_descricao}` : null]
+            .filter(Boolean)
+            .join("\n") || undefined,
       },
     });
   });
@@ -179,6 +192,11 @@ export async function getById(id: string) {
               acessorios: { where: { deletedAt: null } },
             },
           },
+        },
+      },
+      acessorios: {
+        include: {
+          acessorio: true,
         },
       },
       respostas: { include: { pergunta: true } },

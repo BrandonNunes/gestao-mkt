@@ -80,6 +80,7 @@ export const updateAcessorioSchema = createAcessorioSchema.partial().extend({
 export const createCautelaSchema = z.object({
   usuario_id: z.string().uuid(),
   equipamento_ids: z.array(z.string().uuid()).min(1, "Selecione pelo menos um equipamento"),
+  acessorio_ids: z.array(z.string().uuid()).optional(),
   data_prevista_retorno: z.string().datetime(),
 });
 

@@ -28,7 +28,12 @@ export async function POST(request: NextRequest) {
   if (!parsed.success) return NextResponse.json({ error: parsed.error.errors[0].message }, { status: 400 });
 
   try {
-    const cautela = await cautelasService.create(parsed.data);
+    const cautela = await cautelasService.create({
+      usuario_id: parsed.data.usuario_id,
+      equipamento_ids: parsed.data.equipamento_ids,
+      acessorio_ids: parsed.data.acessorio_ids,
+      data_prevista_retorno: parsed.data.data_prevista_retorno,
+    });
     return NextResponse.json(cautela, { status: 201 });
   } catch (err) {
     return NextResponse.json({ error: err instanceof Error ? err.message : "Erro" }, { status: 422 });
