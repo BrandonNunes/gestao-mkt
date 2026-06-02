@@ -30,12 +30,14 @@ export default function CautelasList() {
     setLoading(false);
   };
 
-  useEffect(() => { fetchCautelas(); }, [page]);
+  useEffect(() => {
+    fetchCautelas();
+  }, [page]);
 
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Cautelas</h2>
+        <h2 className="text-2xl font-bold text-foreground">Cautelas</h2>
         {isGestor && <Button onClick={() => router.push("/cautelas/nova")}>Nova Cautela</Button>}
       </div>
       <Card>
@@ -62,14 +64,28 @@ export default function CautelasList() {
                     <td className="p-3 font-mono">{c.numero}</td>
                     <td className="p-3">{c.usuario?.nome}</td>
                     <td className="p-3">
-                      <span className={`px-2 py-1 rounded-full text-xs ${STATUS_CAUTELA_COLORS[c.status as keyof typeof STATUS_CAUTELA_COLORS] || ""}`}>
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs ${STATUS_CAUTELA_COLORS[c.status as keyof typeof STATUS_CAUTELA_COLORS] || ""}`}
+                      >
                         {STATUS_CAUTELA_LABELS[c.status as keyof typeof STATUS_CAUTELA_LABELS]}
                       </span>
                     </td>
-                    <td className="p-3">{c.data_emissao ? new Date(c.data_emissao).toLocaleDateString("pt-BR") : "-"}</td>
-                    <td className="p-3">{c.data_prevista_retorno ? new Date(c.data_prevista_retorno).toLocaleDateString("pt-BR") : "-"}</td>
                     <td className="p-3">
-                      <Button variant="ghost" size="sm" onClick={() => router.push(`/cautelas/${c.id}`)}>Ver</Button>
+                      {c.data_emissao ? new Date(c.data_emissao).toLocaleDateString("pt-BR") : "-"}
+                    </td>
+                    <td className="p-3">
+                      {c.data_prevista_retorno
+                        ? new Date(c.data_prevista_retorno).toLocaleDateString("pt-BR")
+                        : "-"}
+                    </td>
+                    <td className="p-3">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => router.push(`/cautelas/${c.id}`)}
+                      >
+                        Ver
+                      </Button>
                     </td>
                   </tr>
                 ))}
@@ -79,8 +95,16 @@ export default function CautelasList() {
         </CardContent>
       </Card>
       <div className="flex justify-between mt-4">
-        <Button variant="outline" onClick={() => setPage(Math.max(1, page - 1))} disabled={page === 1}>Anterior</Button>
-        <Button variant="outline" onClick={() => setPage(page + 1)} disabled={page * 20 >= total}>Próxima</Button>
+        <Button
+          variant="outline"
+          onClick={() => setPage(Math.max(1, page - 1))}
+          disabled={page === 1}
+        >
+          Anterior
+        </Button>
+        <Button variant="outline" onClick={() => setPage(page + 1)} disabled={page * 20 >= total}>
+          Próxima
+        </Button>
       </div>
     </div>
   );

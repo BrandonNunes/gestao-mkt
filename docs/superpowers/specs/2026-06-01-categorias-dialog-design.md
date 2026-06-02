@@ -44,12 +44,12 @@ prisma/schema.prisma                                       (ja tem model Categor
 
 ### CategoriaFormDialog
 
-| Prop | Tipo | Descricao |
-|------|------|-----------|
-| open | boolean | Controla abertura |
-| onOpenChange | (open: boolean) => void | Fechamento |
-| onSuccess | () => void | Callback apos salvar |
-| categoria? | { id, nome } \| null | Se definido → modo edicao |
+| Prop         | Tipo                    | Descricao                 |
+| ------------ | ----------------------- | ------------------------- |
+| open         | boolean                 | Controla abertura         |
+| onOpenChange | (open: boolean) => void | Fechamento                |
+| onSuccess    | () => void              | Callback apos salvar      |
+| categoria?   | { id, nome } \| null    | Se definido → modo edicao |
 
 - **Modo criacao** (`categoria` undefined): campos vazios, submete `POST /api/categorias`
 - **Modo edicao** (`categoria` definido): campos preenchidos, submete `PUT /api/categorias/[id]`
@@ -58,12 +58,12 @@ prisma/schema.prisma                                       (ja tem model Categor
 
 ### CategoriasList
 
-| Prop | Tipo | Descricao |
-|------|------|-----------|
-| categorias | Array | Dados da listagem |
-| onRefresh | () => void | Callback para recarregar |
+| Prop       | Tipo       | Descricao                |
+| ---------- | ---------- | ------------------------ |
+| categorias | Array      | Dados da listagem        |
+| onRefresh  | () => void | Callback para recarregar |
 
-- Tabela: Nome, Equipamentos (contagem), Acoes (apenas GESTOR)
+- Tabela: Nome, Equipamentos (contagem), Ações (apenas GESTOR)
 - Botoes: "Editar" (abre CategoriaFormDialog em modo edicao)
 - Botao "Excluir" visivel apenas se `_count.equipamentos === 0` (client-side). Confirmacao via AlertDialog inline.
 - Botao global "Nova Categoria" visivel apenas GESTOR.
@@ -112,12 +112,12 @@ DELETE /api/categorias/[id] → categoriasService.softDelete(id)
 
 ## Permissoes
 
-| Acao | GESTOR | COLABORADOR |
-|------|--------|-------------|
-| Ver listagem | Sim | Sim |
-| Criar categoria | Sim | Nao (botao oculto) |
-| Editar categoria | Sim | Nao (botao oculto) |
-| Excluir categoria | Sim | Nao (botao oculto) |
+| Acao              | GESTOR | COLABORADOR        |
+| ----------------- | ------ | ------------------ |
+| Ver listagem      | Sim    | Sim                |
+| Criar categoria   | Sim    | Nao (botao oculto) |
+| Editar categoria  | Sim    | Nao (botao oculto) |
+| Excluir categoria | Sim    | Nao (botao oculto) |
 
 ## Validacao
 

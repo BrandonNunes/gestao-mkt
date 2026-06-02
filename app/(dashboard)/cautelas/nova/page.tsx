@@ -47,10 +47,12 @@ export default function NovaCautelaPage() {
   const toggleEquipamento = async (id: string) => {
     if (selectedEquipamentos.includes(id)) {
       setSelectedEquipamentos((prev) => prev.filter((e) => e !== id));
-      setSelectedAcessorios((prev) => prev.filter((a) => {
-        const equipAcessorios = acessoriosMap[id] || [];
-        return !equipAcessorios.some((ac) => ac.id === a);
-      }));
+      setSelectedAcessorios((prev) =>
+        prev.filter((a) => {
+          const equipAcessorios = acessoriosMap[id] || [];
+          return !equipAcessorios.some((ac) => ac.id === a);
+        }),
+      );
       setAcessoriosMap((prev) => {
         const next = { ...prev };
         delete next[id];
@@ -65,18 +67,13 @@ export default function NovaCautelaPage() {
       const data = await res.json();
       const acessoriosData = (data || []).filter((a: Acessorio) => a.status === "ATIVO");
       setAcessoriosMap((prev) => ({ ...prev, [id]: acessoriosData }));
-      setSelectedAcessorios((prev) => [
-        ...prev,
-        ...acessoriosData.map((a: Acessorio) => a.id),
-      ]);
+      setSelectedAcessorios((prev) => [...prev, ...acessoriosData.map((a: Acessorio) => a.id)]);
     }
   };
 
   const toggleAcessorio = (acessorioId: string) => {
     setSelectedAcessorios((prev) =>
-      prev.includes(acessorioId)
-        ? prev.filter((a) => a !== acessorioId)
-        : [...prev, acessorioId],
+      prev.includes(acessorioId) ? prev.filter((a) => a !== acessorioId) : [...prev, acessorioId],
     );
   };
 
@@ -138,7 +135,7 @@ export default function NovaCautelaPage() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Nova Cautela</h2>
+      <h2 className="text-2xl font-bold mb-4 text-foreground">Nova Cautela</h2>
       {error && <div className="p-3 mb-4 text-sm text-red-600 bg-red-50 rounded-md">{error}</div>}
 
       <div className="space-y-6 max-w-2xl">

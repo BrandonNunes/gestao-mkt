@@ -12,12 +12,15 @@ export default function AuditoriaPage() {
     const token = localStorage.getItem("accessToken");
     fetch("/api/auditoria?limit=50", { headers: { Authorization: `Bearer ${token}` } })
       .then((r) => r.json())
-      .then((d) => { setRegistros(d.data || []); setLoading(false); });
+      .then((d) => {
+        setRegistros(d.data || []);
+        setLoading(false);
+      });
   }, []);
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Auditoria</h2>
+      <h2 className="text-2xl font-bold mb-4 text-foreground">Auditoria</h2>
       <Card>
         <CardContent className="p-0">
           {loading ? (
@@ -32,7 +35,7 @@ export default function AuditoriaPage() {
                   <th className="text-left p-3">Data/Hora</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="text-foreground">
                 {registros.map((r: any) => (
                   <tr key={r.id} className="border-t border-border">
                     <td className="p-3">{r.entidade}</td>

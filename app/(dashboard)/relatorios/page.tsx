@@ -34,18 +34,30 @@ export default function RelatoriosPage() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Relatorios</h2>
+      <h2 className="text-2xl font-bold mb-4 text-foreground">Relatorios</h2>
       <p className="text-muted-foreground mb-4">Selecione o tipo de relatorio desejado.</p>
 
       <div className="grid grid-cols-3 gap-4 mb-6">
-        <Button variant="outline" className="p-6 h-auto text-center" onClick={() => fetchRelatorio("equipamentos")}>
+        <Button
+          variant="outline"
+          className="p-6 h-auto text-center text-foreground"
+          onClick={() => fetchRelatorio("equipamentos")}
+        >
           Equipamentos
         </Button>
-        <Button variant="outline" className="p-6 h-auto text-center" onClick={() => fetchRelatorio("cautelas")}>
+        <Button
+          variant="outline"
+          className="p-6 h-auto text-center text-foreground"
+          onClick={() => fetchRelatorio("cautelas")}
+        >
           Cautelas
         </Button>
-        <Button variant="outline" className="p-6 h-auto text-center" onClick={() => fetchRelatorio("utilizacao")}>
-          Utilizacao
+        <Button
+          variant="outline"
+          className="p-6 h-auto text-center text-foreground"
+          onClick={() => fetchRelatorio("utilizacao")}
+        >
+          Utilização
         </Button>
       </div>
 
@@ -55,7 +67,9 @@ export default function RelatoriosPage() {
 
       {data && tipo === "equipamentos" && (
         <Card>
-          <CardHeader><CardTitle>Relatorio de Equipamentos</CardTitle></CardHeader>
+          <CardHeader>
+            <CardTitle>Relatorio de Equipamentos</CardTitle>
+          </CardHeader>
           <CardContent className="p-0">
             <table className="w-full text-sm">
               <thead className="bg-muted">
@@ -76,7 +90,11 @@ export default function RelatoriosPage() {
                   </tr>
                 ))}
                 {data.length === 0 && (
-                  <tr><td colSpan={4} className="p-4 text-center text-muted-foreground/60">Nenhum equipamento.</td></tr>
+                  <tr>
+                    <td colSpan={4} className="p-4 text-center text-muted-foreground/60">
+                      Nenhum equipamento.
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </table>
@@ -86,7 +104,9 @@ export default function RelatoriosPage() {
 
       {data && tipo === "cautelas" && (
         <Card>
-          <CardHeader><CardTitle>Relatorio de Cautelas</CardTitle></CardHeader>
+          <CardHeader>
+            <CardTitle>Relatorio de Cautelas</CardTitle>
+          </CardHeader>
           <CardContent className="p-0">
             <table className="w-full text-sm">
               <thead className="bg-muted">
@@ -105,13 +125,23 @@ export default function RelatoriosPage() {
                     <td className="p-3 font-mono">{c.numero}</td>
                     <td className="p-3">{c.usuario?.nome}</td>
                     <td className="p-3">{c.status}</td>
-                    <td className="p-3">{c.data_emissao ? new Date(c.data_emissao).toLocaleDateString("pt-BR") : "-"}</td>
-                    <td className="p-3">{c.data_prevista_retorno ? new Date(c.data_prevista_retorno).toLocaleDateString("pt-BR") : "-"}</td>
+                    <td className="p-3">
+                      {c.data_emissao ? new Date(c.data_emissao).toLocaleDateString("pt-BR") : "-"}
+                    </td>
+                    <td className="p-3">
+                      {c.data_prevista_retorno
+                        ? new Date(c.data_prevista_retorno).toLocaleDateString("pt-BR")
+                        : "-"}
+                    </td>
                     <td className="p-3">{c._count?.equipamentos ?? 0}</td>
                   </tr>
                 ))}
                 {data.length === 0 && (
-                  <tr><td colSpan={6} className="p-4 text-center text-muted-foreground/60">Nenhuma cautela.</td></tr>
+                  <tr>
+                    <td colSpan={6} className="p-4 text-center text-muted-foreground/60">
+                      Nenhuma cautela.
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </table>
@@ -122,14 +152,18 @@ export default function RelatoriosPage() {
       {data && tipo === "utilizacao" && (
         <div className="space-y-4">
           <Card>
-            <CardHeader><CardTitle>Utilizacao no Periodo</CardTitle></CardHeader>
+            <CardHeader>
+              <CardTitle>Utilização no Periodo</CardTitle>
+            </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold">{data.total_cautelas_periodo}</p>
               <p className="text-sm text-muted-foreground">total de cautelas</p>
             </CardContent>
           </Card>
           <Card>
-            <CardHeader><CardTitle>Equipamentos Mais Utilizados</CardTitle></CardHeader>
+            <CardHeader>
+              <CardTitle>Equipamentos Mais Utilizados</CardTitle>
+            </CardHeader>
             <CardContent className="p-0">
               <table className="w-full text-sm">
                 <thead className="bg-muted">

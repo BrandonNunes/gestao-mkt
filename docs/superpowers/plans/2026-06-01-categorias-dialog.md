@@ -13,6 +13,7 @@
 ### Task 1: API Route `PUT/DELETE /api/categorias/[id]`
 
 **Files:**
+
 - Create: `app/api/categorias/[id]/route.ts`
 
 - [ ] **Step 1: Create the route file**
@@ -26,12 +27,14 @@ import * as categoriasService from "@/src/features/equipamentos/services/categor
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const user = await getTokenFromRequest(request);
   if (!user) return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
-  if (user.perfil !== "GESTOR") return NextResponse.json({ error: "Acesso negado" }, { status: 403 });
+  if (user.perfil !== "GESTOR")
+    return NextResponse.json({ error: "Acesso negado" }, { status: 403 });
 
   const { id } = await params;
   const body = await request.json();
   const parsed = createCategoriaSchema.safeParse(body);
-  if (!parsed.success) return NextResponse.json({ error: parsed.error.errors[0].message }, { status: 400 });
+  if (!parsed.success)
+    return NextResponse.json({ error: parsed.error.errors[0].message }, { status: 400 });
 
   try {
     const categoria = await categoriasService.update(id, parsed.data.nome);
@@ -41,17 +44,24 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
   const user = await getTokenFromRequest(request);
   if (!user) return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
-  if (user.perfil !== "GESTOR") return NextResponse.json({ error: "Acesso negado" }, { status: 403 });
+  if (user.perfil !== "GESTOR")
+    return NextResponse.json({ error: "Acesso negado" }, { status: 403 });
 
   const { id } = await params;
   try {
     await categoriasService.softDelete(id);
     return NextResponse.json({ message: "Categoria excluída." });
   } catch (err) {
-    return NextResponse.json({ error: err instanceof Error ? err.message : "Erro" }, { status: 409 });
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "Erro" },
+      { status: 409 },
+    );
   }
 }
 ```
@@ -76,6 +86,7 @@ git commit -m "feat: adiciona PUT e DELETE /api/categorias/[id]"
 ### Task 2: CategoriaFormDialog Component
 
 **Files:**
+
 - Create: `src/features/equipamentos/views/categoria-form-dialog.tsx`
 
 - [ ] **Step 1: Create the dialog component**
@@ -219,6 +230,7 @@ git commit -m "feat: adiciona CategoriaFormDialog (criacao/edicao)"
 ### Task 3: CategoriasList Component
 
 **Files:**
+
 - Create: `src/features/equipamentos/views/categorias-list.tsx`
 
 - [ ] **Step 1: Create the list component with dialogs**
@@ -320,7 +332,7 @@ export default function CategoriasList({ categorias, onRefresh }: Props) {
               <tr>
                 <th className="text-left p-3">Nome</th>
                 <th className="text-left p-3">Equipamentos</th>
-                {isGestor && <th className="text-left p-3">Acoes</th>}
+                {isGestor && <th className="text-left p-3">Ações</th>}
               </tr>
             </thead>
             <tbody>
@@ -330,13 +342,17 @@ export default function CategoriasList({ categorias, onRefresh }: Props) {
                   <td className="p-3">{c._count?.equipamentos ?? 0}</td>
                   {isGestor && (
                     <td className="p-3 space-x-1">
-                      <Button variant="ghost" size="sm" onClick={() => handleEdit(c)}>Editar</Button>
+                      <Button variant="ghost" size="sm" onClick={() => handleEdit(c)}>
+                        Editar
+                      </Button>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => handleDeleteClick(c)}
                         disabled={(c._count?.equipamentos ?? 0) > 0}
-                        className={(c._count?.equipamentos ?? 0) > 0 ? "opacity-50" : "text-red-600"}
+                        className={
+                          (c._count?.equipamentos ?? 0) > 0 ? "opacity-50" : "text-red-600"
+                        }
                       >
                         Excluir
                       </Button>
@@ -402,6 +418,7 @@ git commit -m "feat: adiciona CategoriasList com dialog de exclusao"
 ### Task 4: Update Categorias Page
 
 **Files:**
+
 - Modify: `app/(dashboard)/categorias/page.tsx` (replace entirely)
 
 - [ ] **Step 1: Rewrite the page as a thin wrapper**
@@ -424,7 +441,9 @@ export default function CategoriasPage() {
     setCategorias(data.data || []);
   }, []);
 
-  useEffect(() => { fetchCategorias(); }, [fetchCategorias]);
+  useEffect(() => {
+    fetchCategorias();
+  }, [fetchCategorias]);
 
   return <CategoriasList categorias={categorias} onRefresh={fetchCategorias} />;
 }
@@ -493,6 +512,7 @@ git commit -m "chore: validacao manual de categorias CRUD via dialog"
 ## Self-Review
 
 **Spec coverage:**
+
 - Criar categoria via Dialog: Task 2 + Task 4 ✓
 - Editar categoria via Dialog: Task 2 + Task 4 ✓
 - Excluir categoria com confirmacao: Task 3 ✓
@@ -505,7 +525,8 @@ git commit -m "chore: validacao manual de categorias CRUD via dialog"
 
 **Placeholder scan:** No TBD, TODO, vague descriptions. ✓
 
-**Type consistency:** 
+**Type consistency:**
+
 - `Categoria` interface in Task 3 matches `categoria?` prop in Task 2 ✓
 - `onRefresh` callback consistent across Task 3 and Task 4 ✓
 - API route params pattern matches existing routes (`params: Promise<{ id: string }>`) ✓

@@ -70,10 +70,12 @@ export default function EquipamentosList() {
           {loading ? (
             <div className="p-4 text-center text-muted-foreground">Carregando...</div>
           ) : equipamentos.length === 0 ? (
-            <div className="p-4 text-center text-muted-foreground">Nenhum equipamento encontrado.</div>
+            <div className="p-4 text-center text-muted-foreground">
+              Nenhum equipamento encontrado.
+            </div>
           ) : (
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 ">
+              <thead className="bg-muted ">
                 <tr>
                   <th className="text-left p-3">Patrimônio</th>
                   <th className="text-left p-3">Nome</th>

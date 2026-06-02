@@ -31,13 +31,13 @@ export default function LoginForm() {
   };
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
-        <CardTitle>Entrar</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {error && <div className="p-3 text-sm text-red-600 bg-red-50 rounded-md">{error}</div>}
+          <CardTitle>Entrar</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {error && <div className="p-3 text-sm text-red-600 bg-red-50 dark:bg-red-900/30 rounded-md">{error}</div>}
           <div>
             <Input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>

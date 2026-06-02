@@ -1,14 +1,20 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useAuth } from "@/src/hooks/use-auth";
 import { useRouter } from "next/navigation";
 import { Sidebar } from "@/src/components/layout/sidebar";
 import { ThemeToggle } from "@/src/components/theme-toggle";
+import { Button } from "@/src/components/ui/button";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, logout } = useAuth();
   const router = useRouter();
+
+  const handleLogout = useCallback(async () => {
+    await logout();
+    router.push("/login");
+  }, [logout, router]);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -34,6 +40,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </span>
           <div className="flex items-center gap-3">
             <ThemeToggle />
+            <Button variant="ghost" size="sm" onClick={handleLogout}>Sair</Button>
             <span className="text-xs bg-muted px-2 py-1 rounded text-muted-foreground">
               {user?.perfil === "GESTOR" ? "Gestor" : "Colaborador"}
             </span>

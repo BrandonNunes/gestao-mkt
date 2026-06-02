@@ -35,7 +35,7 @@ export default function ChecklistsList({ checklists, onRefresh }: Props) {
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Checklists</h2>
+        <h2 className="text-2xl font-bold text-foreground">Checklists</h2>
         {isGestor && <Button onClick={handleNew}>Novo Checklist</Button>}
       </div>
 
@@ -46,25 +46,29 @@ export default function ChecklistsList({ checklists, onRefresh }: Props) {
           <table className="w-full text-sm">
             <thead className="bg-muted">
               <tr>
-                <th className="text-left p-3">Nome</th>
-                <th className="text-left p-3">Tipo</th>
-                <th className="text-left p-3">Perguntas</th>
-                {isGestor && <th className="text-left p-3">Ações</th>}
+                <th className="text-left p-3 text-foreground">Nome</th>
+                <th className="text-left p-3 text-foreground">Tipo</th>
+                <th className="text-left p-3 text-foreground">Perguntas</th>
+                {isGestor && <th className="text-left p-3 text-foreground">Ações</th>}
               </tr>
             </thead>
-            <tbody>
+            <tbody className="text-foreground">
               {checklists.map((c) => (
                 <tr key={c.id} className="border-t border-border">
                   <td className="p-3">{c.nome}</td>
                   <td className="p-3">
-                    <span className={`px-2 py-1 rounded-full text-xs ${c.tipo === "SAIDA" ? "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300" : "bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300"}`}>
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs ${c.tipo === "SAIDA" ? "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300" : "bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300"}`}
+                    >
                       {c.tipo === "SAIDA" ? "Saída" : "Devolução"}
                     </span>
                   </td>
                   <td className="p-3">{c._count?.perguntas ?? 0}</td>
                   {isGestor && (
                     <td className="p-3">
-                      <Button variant="ghost" size="sm" onClick={() => handleEdit(c)}>Editar</Button>
+                      <Button variant="ghost" size="sm" onClick={() => handleEdit(c)}>
+                        Editar
+                      </Button>
                     </td>
                   )}
                 </tr>

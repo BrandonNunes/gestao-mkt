@@ -46,7 +46,9 @@ export default function UsuariosList() {
     setLoading(false);
   };
 
-  useEffect(() => { fetchUsuarios(); }, [page]);
+  useEffect(() => {
+    fetchUsuarios();
+  }, [page]);
 
   const handleNew = () => {
     setSelectedUsuario(null);
@@ -68,7 +70,7 @@ export default function UsuariosList() {
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Usuários</h2>
+        <h2 className="text-2xl font-bold text-foreground">Usuários</h2>
         <Button onClick={handleNew}>Novo Usuário</Button>
       </div>
       <div className="flex gap-2 mb-4">
@@ -76,7 +78,9 @@ export default function UsuariosList() {
           placeholder="Buscar por nome, email ou matrícula..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          onKeyDown={(e) => { if (e.key === "Enter") fetchUsuarios(); }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") fetchUsuarios();
+          }}
         />
         <Button onClick={fetchUsuarios}>Buscar</Button>
       </div>
@@ -106,12 +110,16 @@ export default function UsuariosList() {
                     <td className="p-3">{u.matricula}</td>
                     <td className="p-3">{u.perfil === "GESTOR" ? "Gestor" : "Colaborador"}</td>
                     <td className="p-3">
-                      <span className={`px-2 py-1 rounded-full text-xs ${u.status === "ATIVO" ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300" : "bg-muted text-foreground/80"}`}>
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs ${u.status === "ATIVO" ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300" : "bg-muted text-foreground/80"}`}
+                      >
                         {u.status === "ATIVO" ? "Ativo" : "Inativo"}
                       </span>
                     </td>
                     <td className="p-3 space-x-1">
-                      <Button variant="ghost" size="sm" onClick={() => handleEdit(u)}>Editar</Button>
+                      <Button variant="ghost" size="sm" onClick={() => handleEdit(u)}>
+                        Editar
+                      </Button>
                       <Button variant="ghost" size="sm" onClick={() => handleStatus(u)}>
                         {u.status === "ATIVO" ? "Inativar" : "Ativar"}
                       </Button>
@@ -124,9 +132,19 @@ export default function UsuariosList() {
         </CardContent>
       </Card>
       <div className="flex justify-between mt-4">
-        <Button variant="outline" onClick={() => setPage(Math.max(1, page - 1))} disabled={page === 1}>Anterior</Button>
-        <span className="text-sm text-muted-foreground">Página {page} de {Math.ceil(total / 20) || 1}</span>
-        <Button variant="outline" onClick={() => setPage(page + 1)} disabled={page * 20 >= total}>Próxima</Button>
+        <Button
+          variant="outline"
+          onClick={() => setPage(Math.max(1, page - 1))}
+          disabled={page === 1}
+        >
+          Anterior
+        </Button>
+        <span className="text-sm text-muted-foreground">
+          Página {page} de {Math.ceil(total / 20) || 1}
+        </span>
+        <Button variant="outline" onClick={() => setPage(page + 1)} disabled={page * 20 >= total}>
+          Próxima
+        </Button>
       </div>
 
       <UsuarioFormDialog

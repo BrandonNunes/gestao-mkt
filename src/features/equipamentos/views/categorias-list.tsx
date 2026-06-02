@@ -81,7 +81,7 @@ export default function CategoriasList({ categorias, onRefresh }: Props) {
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Categorias</h2>
+        <h2 className="text-2xl font-bold text-foreground">Categorias</h2>
         {isGestor && <Button onClick={handleNew}>Nova Categoria</Button>}
       </div>
 
@@ -92,19 +92,21 @@ export default function CategoriasList({ categorias, onRefresh }: Props) {
           <table className="w-full text-sm">
             <thead className="bg-muted">
               <tr>
-                <th className="text-left p-3">Nome</th>
-                <th className="text-left p-3">Equipamentos</th>
-                {isGestor && <th className="text-left p-3">Acoes</th>}
+                <th className="text-left p-3 text-foreground">Nome</th>
+                <th className="text-left p-3 text-foreground">Equipamentos</th>
+                {isGestor && <th className="text-left p-3 text-foreground">Ações</th>}
               </tr>
             </thead>
-            <tbody>
+            <tbody className="text-foreground">
               {categorias.map((c) => (
                 <tr key={c.id} className="border-t border-border">
                   <td className="p-3">{c.nome}</td>
                   <td className="p-3">{c._count?.equipamentos ?? 0}</td>
                   {isGestor && (
                     <td className="p-3 space-x-1">
-                      <Button variant="ghost" size="sm" onClick={() => handleEdit(c)}>Editar</Button>
+                      <Button variant="ghost" size="sm" onClick={() => handleEdit(c)}>
+                        Editar
+                      </Button>
                       <Button
                         variant="ghost"
                         size="sm"

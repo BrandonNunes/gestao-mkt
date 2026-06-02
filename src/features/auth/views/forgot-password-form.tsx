@@ -21,24 +21,24 @@ export default function ForgotPasswordForm() {
   };
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
-        <CardTitle>Recuperar Senha</CardTitle>
-      </CardHeader>
-      <CardContent>
-        {sent ? (
-          <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">Se o e-mail existir, um link de recuperação será enviado.</p>
-            <Link href="/login"><Button variant="outline" className="w-full">Voltar ao login</Button></Link>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <Input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
-            <Button type="submit" className="w-full">Enviar</Button>
-            <Link href="/login" className="block text-center text-sm text-blue-600 hover:underline">Voltar</Link>
-          </form>
-        )}
-      </CardContent>
+          <CardTitle>Recuperar Senha</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {sent ? (
+            <div className="space-y-4">
+              <p className="text-sm text-muted-foreground">Se o e-mail existir, um link de recuperacao sera enviado.</p>
+              <Link href="/login"><Button variant="outline" className="w-full">Voltar ao login</Button></Link>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <Input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              <Button type="submit" className="w-full">Enviar</Button>
+              <Link href="/login" className="block text-center text-sm text-blue-600 hover:underline">Voltar</Link>
+            </form>
+          )}
+        </CardContent>
     </Card>
   );
 }
