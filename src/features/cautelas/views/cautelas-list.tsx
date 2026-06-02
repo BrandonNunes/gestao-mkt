@@ -36,7 +36,7 @@ export default function CautelasList() {
     <div>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Cautelas</h2>
-        {isGestor && <Button onClick={() => router.push("/dashboard/cautelas/nova")}>Nova Cautela</Button>}
+        {isGestor && <Button onClick={() => router.push("/cautelas/nova")}>Nova Cautela</Button>}
       </div>
       <Card>
         <CardContent className="p-0">
@@ -59,7 +59,7 @@ export default function CautelasList() {
               <tbody>
                 {cautelas.map((c: any) => (
                   <tr key={c.id} className="border-t">
-                    <td className="p-3 font-mono">{c.numero || c.id.slice(0, 8)}</td>
+                    <td className="p-3 font-mono">{c.numero}</td>
                     <td className="p-3">{c.usuario?.nome}</td>
                     <td className="p-3">
                       <span className={`px-2 py-1 rounded-full text-xs ${STATUS_CAUTELA_COLORS[c.status as keyof typeof STATUS_CAUTELA_COLORS] || ""}`}>
@@ -69,7 +69,7 @@ export default function CautelasList() {
                     <td className="p-3">{c.data_emissao ? new Date(c.data_emissao).toLocaleDateString("pt-BR") : "-"}</td>
                     <td className="p-3">{c.data_prevista_retorno ? new Date(c.data_prevista_retorno).toLocaleDateString("pt-BR") : "-"}</td>
                     <td className="p-3">
-                      <Button variant="ghost" size="sm" onClick={() => router.push(`/dashboard/cautelas/${c.id}`)}>Ver</Button>
+                      <Button variant="ghost" size="sm" onClick={() => router.push(`/cautelas/${c.id}`)}>Ver</Button>
                     </td>
                   </tr>
                 ))}
